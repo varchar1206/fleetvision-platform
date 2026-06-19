@@ -1,38 +1,47 @@
-import { useEffect, useState } from "react";
-import type { Schema } from "../amplify/data/resource";
-import { generateClient } from "aws-amplify/data";
-
-const client = generateClient<Schema>();
+import "./App.css";
 
 function App() {
-  const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
-
-  useEffect(() => {
-    client.models.Todo.observeQuery().subscribe({
-      next: (data) => setTodos([...data.items]),
-    });
-  }, []);
-
-  function createTodo() {
-    client.models.Todo.create({ content: window.prompt("Todo content") });
-  }
-
   return (
-    <main>
-      <h1>My todos</h1>
-      <button onClick={createTodo}>+ new</button>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>{todo.content}</li>
-        ))}
-      </ul>
-      <div>
-        🥳 App successfully hosted. Try creating a new todo.
-        <br />
-        <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
-          Review next step of this tutorial.
-        </a>
-      </div>
+    <main className="app-shell">
+      <header className="top-bar">
+        <div>
+          <h1>FleetVision</h1>
+          <p>Transportation visibility and execution platform</p>
+        </div>
+        <div className="role-badge">Shipper View</div>
+      </header>
+
+      <nav className="nav-tabs">
+        <button>Dashboard</button>
+        <button>Planning</button>
+        <button>Tender Queue</button>
+        <button>Active Loads</button>
+        <button>Completed Loads</button>
+        <button>Exceptions</button>
+        <button>Performance</button>
+      </nav>
+
+      <section className="dashboard-grid">
+        <div className="card">
+          <h2>Planning</h2>
+          <p>Create load entries, build from last week, bulk paste, or upload CSV files.</p>
+        </div>
+
+        <div className="card">
+          <h2>Tender Queue</h2>
+          <p>Tender selected dispatch windows or individual loads to brokers.</p>
+        </div>
+
+        <div className="card">
+          <h2>Active Loads</h2>
+          <p>Track assigned, en route, pickup, delivery, return, delay, and exception statuses.</p>
+        </div>
+
+        <div className="card">
+          <h2>Exceptions</h2>
+          <p>Monitor delays, coverage risks, wrong trailers, unable-to-execute events, and missed updates.</p>
+        </div>
+      </section>
     </main>
   );
 }
