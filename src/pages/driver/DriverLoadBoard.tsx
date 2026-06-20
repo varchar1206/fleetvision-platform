@@ -35,11 +35,50 @@ export default function DriverLoadBoard() {
       return;
     }
 
+    const selectedLoad = loads.find((load) => load.id === selectedLoadId);
+
     await client.models.Load.update({
       id: selectedLoadId,
       status,
       notes: note,
     });
+
+    if (status === "DELIVERED" && selectedLoad) {
+      await Promise.all([
+        client.models.Notification.create({
+          loadId: selectedLoad.id,
+          eventType: "LOAD_DELIVERED",
+          audience: "Shipper",
+          title: "Load Delivered",
+          message: `Load for store ${selectedLoad.storeNumber} has been delivered.`,
+          channel: "IN_APP",
+          status: "UNREAD",
+          createdAt: new Date().toISOString(),
+        }),
+
+        client.models.Notification.create({
+          loadId: selectedLoad.id,
+          eventType: "LOAD_DELIVERED",
+          audience: "Broker",
+          title: "Load Delivered",
+          message: `Load for store ${selectedLoad.storeNumber} has been delivered.`,
+          channel: "IN_APP",
+          status: "UNREAD",
+          createdAt: new Date().toISOString(),
+        }),
+
+        client.models.Notification.create({
+          loadId: selectedLoad.id,
+          eventType: "LOAD_DELIVERED",
+          audience: "Carrier",
+          title: "Load Delivered",
+          message: `Load for store ${selectedLoad.storeNumber} has been delivered.`,
+          channel: "IN_APP",
+          status: "UNREAD",
+          createdAt: new Date().toISOString(),
+        }),
+      ]);
+    }
 
     await loadDriverLoads();
   }
