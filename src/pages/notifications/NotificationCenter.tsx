@@ -1,5 +1,6 @@
 import NotificationGrid from "../../components/notifications/NotificationGrid";
 import NotificationMetrics from "../../components/notifications/NotificationMetrics";
+import NotificationLoader from "../../components/notifications/NotificationLoader";
 
 const notifications = [
   {
@@ -39,6 +40,7 @@ export default function NotificationCenter() {
 
       <NotificationMetrics total={notifications.length} unread={unread} />
       <NotificationGrid notifications={notifications} />
+      <NotificationLoader />
     </section>
   );
 }
