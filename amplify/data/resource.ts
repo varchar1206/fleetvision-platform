@@ -10,6 +10,7 @@ const schema = a.schema({
       equipmentType: a.string(),
       brokerName: a.string(),
       carrierName: a.string(),
+      tripId: a.string(),
       rate: a.float(),
       status: a.string().required(),
       bolStatus: a.string(),
@@ -68,6 +69,34 @@ const schema = a.schema({
       delayPhase: a.string(),
       etaImpactMinutes: a.integer(),
       notes: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+  Broker: a
+    .model({
+      brokerName: a.string().required(),
+      contactName: a.string(),
+      email: a.string(),
+      status: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+  Carrier: a
+    .model({
+      carrierName: a.string().required(),
+      mcNumber: a.string(),
+      dotNumber: a.string(),
+      status: a.string(),
+      trackingParticipationRate: a.float(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+  Driver: a
+    .model({
+      carrierId: a.string().required(),
+      driverName: a.string().required(),
+      phoneNumber: a.string(),
+      status: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
 });
