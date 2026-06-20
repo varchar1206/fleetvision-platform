@@ -53,25 +53,50 @@ export default function CarrierLoadBoard() {
     setSelectedLoadIds(loads.map((load) => load.id));
   }
 
-  async function acceptSelected() {
-    const selectedLoads = loads.filter((load) =>
-      selectedLoadIds.includes(load.id)
-    );
+  
+async function acceptSelected() {
+  const selectedLoads = loads.filter((load) =>
+    selectedLoadIds.includes(load.id)
+  );
 
-    await Promise.all(
-      selectedLoads.map((load) =>
+  await Promise.all(
+    selectedLoads.map((load) =>
+      Promise.all([
         client.models.Load.update({
           id: load.id,
           status: "CARRIER_ACCEPTED",
-        })
-      )
-    );
+        }),
 
-    setSelectedLoadIds([]);
-    await loadCarrierLoads();
-  }
+        client.models.Notification.create({
+          loadId: load.id,
+          eventType: "CARRIER_ACCEPTED",
+          audience: "Broker",
+          title: "Carrier Accepted Load",
+          message: `${load.carrierName} accepted load ${load.storeNumber}.`,
+          channel: "IN_APP",
+          status: "UNREAD",
+          createdAt: new Date().toISOString(),
+        }),
 
-  async function rejectSelected() {
+        client.models.Notification.create({
+          loadId: load.id,
+          eventType: "CARRIER_ACCEPTED",
+          audience: "Shipper",
+          title: "Carrier Accepted Load",
+          message: `${load.carrierName} accepted load ${load.storeNumber}.`,
+          channel: "IN_APP",
+          status: "UNREAD",
+          createdAt: new Date().toISOString(),
+        }),
+      ])
+    )
+  );
+
+  setSelectedLoadIds([]);
+  await loadCarrierLoads();
+}
+
+async function rejectSelected() {
     const selectedLoads = loads.filter((load) =>
       selectedLoadIds.includes(load.id)
     );
