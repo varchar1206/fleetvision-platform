@@ -60,6 +60,20 @@ const schema = a.schema({
     })
     .authorization((allow) => [allow.publicApiKey()]),
 
+  Notification: a
+    .model({
+      loadId: a.string(),
+      eventType: a.string().required(),
+      audience: a.string().required(),
+      title: a.string().required(),
+      message: a.string().required(),
+      channel: a.string().required(),
+      status: a.string().required(),
+      createdAt: a.string().required(),
+      readAt: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
   LoadException: a
     .model({
       loadId: a.string().required(),
