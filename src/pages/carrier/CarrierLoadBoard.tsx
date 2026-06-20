@@ -5,6 +5,8 @@ import type { Schema } from "../../../amplify/data/resource";
 import CarrierMetrics from "../../components/carrier/CarrierMetrics";
 import CarrierActions from "../../components/carrier/CarrierActions";
 import CarrierLoadBoardComponent from "../../components/carrier/CarrierLoadBoard";
+import DriverAssignment from "../../components/carrier/DriverAssignment";
+import DispatchActions from "../../components/carrier/DispatchActions";
 
 const client = generateClient<Schema>();
 
@@ -14,6 +16,7 @@ export default function CarrierLoadBoard() {
   const [loads, setLoads] = useState<LoadRecord[]>([]);
   const [selectedLoadIds, setSelectedLoadIds] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedDriver, setSelectedDriver] = useState("Select Driver");
 
   async function loadCarrierLoads() {
     setIsLoading(true);
@@ -86,6 +89,55 @@ export default function CarrierLoadBoard() {
     await loadCarrierLoads();
   }
 
+  async function assignDriver() {
+    const selectedLoads = loads.filter((load) => selectedLoadIds.includes(load.id));
+
+    if (selectedLoads.length === 0) {
+      alert("Select at least one load.");
+      return;
+    }
+
+    if (selectedDriver === "Select Driver") {
+      alert("Select a driver first.");
+      return;
+    }
+
+    await Promise.all(
+      selectedLoads.map((load) =>
+        client.models.Load.update({
+          id: load.id,
+          status: "ASSIGNED_TO_DRIVER",
+          notes: `Driver assigned: ${selectedDriver}.`,
+        })
+      )
+    );
+
+    setSelectedLoadIds([]);
+    await loadCarrierLoads();
+  }
+
+  async function dispatchSelected() {
+    const selectedLoads = loads.filter((load) => selectedLoadIds.includes(load.id));
+
+    if (selectedLoads.length === 0) {
+      alert("Select at least one load.");
+      return;
+    }
+
+    await Promise.all(
+      selectedLoads.map((load) =>
+        client.models.Load.update({
+          id: load.id,
+          status: "DISPATCHED",
+          notes: "Load dispatched.",
+        })
+      )
+    );
+
+    setSelectedLoadIds([]);
+    await loadCarrierLoads();
+  }
+
   useEffect(() => {
     loadCarrierLoads();
   }, []);
@@ -109,6 +161,17 @@ export default function CarrierLoadBoard() {
         onSelectAll={toggleSelectAll}
         onAcceptSelected={acceptSelected}
         onRejectSelected={rejectSelected}
+      />
+
+      <DriverAssignment
+        selectedDriver={selectedDriver}
+        onDriverChange={setSelectedDriver}
+      />
+
+      <DispatchActions
+        selectedCount={selectedLoadIds.length}
+        onAssignDriver={assignDriver}
+        onDispatchSelected={dispatchSelected}
       />
 
       {isLoading ? (
