@@ -74,8 +74,24 @@ export default function Planning() {
     await loadPlanningRecords();
   }
 
-  function editLoad(load: LoadRecord) {
-    alert(`Edit workflow coming next for ${load.storeNumber}.`);
+  async function editLoad(load: LoadRecord) {
+    if (load.status !== "DRAFT") {
+      alert("Only draft loads can be edited from Planning.");
+      return;
+    }
+
+    const newStore = prompt("Store Number", load.storeNumber || "");
+    if (!newStore) return;
+
+    const newRate = prompt("Rate", load.rate ? String(load.rate) : "0");
+
+    await client.models.Load.update({
+      id: load.id,
+      storeNumber: newStore,
+      rate: newRate ? Number(newRate) : 0,
+    });
+
+    await loadPlanningRecords();
   }
 
   async function deleteLoad(load: LoadRecord) {
