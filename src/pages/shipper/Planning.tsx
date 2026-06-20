@@ -6,19 +6,18 @@ const client = generateClient<Schema>();
 
 type LoadRecord = Schema["Load"]["type"];
 
-const dispatchWindows = ["08:00", "16:00", "18:00", "20:00", "02:00", "04:00"];
-const dispatchHours = Array.from({ length: 24 }, (_, hour) =>
+const dispatchTimes = Array.from({ length: 24 }, (_, hour) =>
   `${String(hour).padStart(2, "0")}:00`
 );
 
 export default function Planning() {
   const [loads, setLoads] = useState<LoadRecord[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedLoadIds, setSelectedLoadIds] = useState<string[]>([]);
 
   const [storeNumber, setStoreNumber] = useState("");
   const [dispatchDate, setDispatchDate] = useState("2026-06-24");
-  const [dispatchWindow, setDispatchWindow] = useState("16:00");
-  const [dispatchHour, setDispatchHour] = useState("16:00");
+  const [dispatchTime, setDispatchTime] = useState("16:00");
   const [activityType, setActivityType] = useState("D/S");
   const [equipmentType, setEquipmentType] = useState("Power Only");
   const [brokerName, setBrokerName] = useState("Beckers");
@@ -31,21 +30,38 @@ export default function Planning() {
     setIsLoading(false);
   }
 
+  function toggleSelected(loadId: string) {
+    setSelectedLoadIds((current) =>
+      current.includes(loadId)
+        ? current.filter((id) => id !== loadId)
+        : [...current, loadId]
+    );
+  }
+
+  function toggleSelectAll() {
+    if (selectedLoadIds.length === loads.length) {
+      setSelectedLoadIds([]);
+      return;
+    }
+
+    setSelectedLoadIds(loads.map((load) => load.id));
+  }
+
   async function createLoadEntry() {
-    if (!storeNumber || !dispatchDate || !dispatchWindow || !activityType) {
-      alert("Store, date, dispatch window, and activity are required.");
+    if (!storeNumber || !dispatchDate || !dispatchTime || !activityType) {
+      alert("Store, date, dispatch time, and activity are required.");
       return;
     }
 
     await client.models.Load.create({
       storeNumber,
       dispatchDate,
-      dispatchWindow,
+      dispatchWindow: dispatchTime,
       activityType,
       equipmentType,
       brokerName,
       carrierName: "",
-      tripId: dispatchHour,
+      tripId: dispatchTime,
       rate: rate ? Number(rate) : 0,
       status: "DRAFT",
       bolStatus: "NOT_REQUIRED",
@@ -58,6 +74,10 @@ export default function Planning() {
     await loadPlanningRecords();
   }
 
+  function editLoad(load: LoadRecord) {
+    alert(`Edit workflow coming next for ${load.storeNumber}.`);
+  }
+
   async function deleteLoad(load: LoadRecord) {
     if (load.status !== "DRAFT") {
       alert("Only draft loads can be deleted from Planning. Tendered or active loads must use recall/cancel workflow.");
@@ -68,19 +88,77 @@ export default function Planning() {
     if (!confirmed) return;
 
     await client.models.Load.delete({ id: load.id });
+    setSelectedLoadIds((current) => current.filter((id) => id !== load.id));
     await loadPlanningRecords();
+  }
+
+  async function deleteSelectedDrafts() {
+    const selectedLoads = loads.filter((load) => selectedLoadIds.includes(load.id));
+    const nonDraftLoads = selectedLoads.filter((load) => load.status !== "DRAFT");
+
+    if (selectedLoads.length === 0) {
+      alert("Select at least one load first.");
+      return;
+    }
+
+    if (nonDraftLoads.length > 0) {
+      alert("Only draft loads can be bulk deleted.");
+      return;
+    }
+
+    const confirmed = confirm(`Delete ${selectedLoads.length} selected draft load(s)?`);
+    if (!confirmed) return;
+
+    await Promise.all(
+      selectedLoads.map((load) => client.models.Load.delete({ id: load.id }))
+    );
+
+    setSelectedLoadIds([]);
+    await loadPlanningRecords();
+  }
+
+  async function publishSelected() {
+    const selectedLoads = loads.filter((load) => selectedLoadIds.includes(load.id));
+
+    if (selectedLoads.length === 0) {
+      alert("Select at least one load first.");
+      return;
+    }
+
+    await Promise.all(
+      selectedLoads.map((load) =>
+        client.models.Load.update({
+          id: load.id,
+          status: "PUBLISHED",
+        })
+      )
+    );
+
+    setSelectedLoadIds([]);
+    await loadPlanningRecords();
+  }
+
+  function sendSelectedToTenderQueue() {
+    if (selectedLoadIds.length === 0) {
+      alert("Select at least one load first.");
+      return;
+    }
+
+    alert("Send Selected To Tender Queue workflow is next.");
   }
 
   useEffect(() => {
     loadPlanningRecords();
   }, []);
 
+  const totalPlannedCost = loads.reduce((sum, load) => sum + (load.rate || 0), 0);
+
   return (
     <section>
       <div className="page-header">
         <div>
           <h2>Planning</h2>
-          <p>Create individual loads, then select loads for publishing or tendering.</p>
+          <p>Create individual planned loads, then select loads for publishing or tendering.</p>
         </div>
       </div>
 
@@ -91,15 +169,9 @@ export default function Planning() {
           <input placeholder="Store Number" value={storeNumber} onChange={(e) => setStoreNumber(e.target.value)} />
           <input type="date" value={dispatchDate} onChange={(e) => setDispatchDate(e.target.value)} />
 
-          <select value={dispatchWindow} onChange={(e) => setDispatchWindow(e.target.value)}>
-            {dispatchWindows.map((window) => (
-              <option key={window} value={window}>{window} Window</option>
-            ))}
-          </select>
-
-          <select value={dispatchHour} onChange={(e) => setDispatchHour(e.target.value)}>
-            {dispatchHours.map((hour) => (
-              <option key={hour} value={hour}>{hour}</option>
+          <select value={dispatchTime} onChange={(e) => setDispatchTime(e.target.value)}>
+            {dispatchTimes.map((time) => (
+              <option key={time} value={time}>{time}</option>
             ))}
           </select>
 
@@ -134,7 +206,17 @@ export default function Planning() {
 
         <div className="card">
           <h2>Total Planned Cost</h2>
-          <p>${loads.reduce((sum, load) => sum + (load.rate || 0), 0).toFixed(2)}</p>
+          <p>${totalPlannedCost.toFixed(2)}</p>
+        </div>
+      </div>
+
+      <div className="table-card">
+        <h2>Bulk Actions</h2>
+        <div className="action-row">
+          <button onClick={toggleSelectAll}>Select All / Clear</button>
+          <button onClick={deleteSelectedDrafts}>Delete Selected Drafts</button>
+          <button onClick={publishSelected}>Publish Selected</button>
+          <button onClick={sendSelectedToTenderQueue}>Send Selected To Tender Queue</button>
         </div>
       </div>
 
@@ -147,31 +229,41 @@ export default function Planning() {
           <table>
             <thead>
               <tr>
+                <th>Select</th>
                 <th>Date</th>
                 <th>Store</th>
-                <th>Window</th>
-                <th>Dispatch Hour</th>
+                <th>Dispatch Time</th>
                 <th>Activity</th>
                 <th>Equipment</th>
                 <th>Broker</th>
                 <th>Rate</th>
                 <th>Status</th>
-                <th>Action</th>
+                <th>Edit</th>
+                <th>Delete</th>
               </tr>
             </thead>
 
             <tbody>
               {loads.map((load) => (
                 <tr key={load.id}>
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={selectedLoadIds.includes(load.id)}
+                      onChange={() => toggleSelected(load.id)}
+                    />
+                  </td>
                   <td>{load.dispatchDate}</td>
                   <td>{load.storeNumber}</td>
-                  <td>{load.dispatchWindow}</td>
                   <td>{load.tripId}</td>
                   <td>{load.activityType}</td>
                   <td>{load.equipmentType}</td>
                   <td>{load.brokerName}</td>
                   <td>{load.rate ? `$${load.rate.toFixed(2)}` : ""}</td>
                   <td>{load.status}</td>
+                  <td>
+                    <button onClick={() => editLoad(load)}>Edit</button>
+                  </td>
                   <td>
                     <button onClick={() => deleteLoad(load)}>Delete</button>
                   </td>
