@@ -128,3 +128,14 @@ th {
   color: #475569;
   font-size: 14px;
 }
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+.app-shell {
+  padding-top: 48px;
+}

@@ -80,7 +80,7 @@ export default function Planning() {
       <div className="page-header">
         <div>
           <h2>Planning</h2>
-          <p>Create individual loads, then group them by dispatch window for tendering.</p>
+          <p>Create individual loads, then select loads for publishing or tendering.</p>
         </div>
       </div>
 
@@ -128,13 +128,13 @@ export default function Planning() {
         </div>
 
         <div className="card">
-          <h2>Dispatch Windows</h2>
-          <p>08:00, 16:00, 18:00, 20:00, 02:00, 04:00</p>
+          <h2>Selected Loads</h2>
+          <p>{selectedLoadIds.length} selected.</p>
         </div>
 
         <div className="card">
-          <h2>Dispatch Hours</h2>
-          <p>0000 through 2300 available.</p>
+          <h2>Total Planned Cost</h2>
+          <p>${loads.reduce((sum, load) => sum + (load.rate || 0), 0).toFixed(2)}</p>
         </div>
       </div>
 
