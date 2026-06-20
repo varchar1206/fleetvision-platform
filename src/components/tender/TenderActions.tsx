@@ -5,6 +5,8 @@ type Props = {
   onSelectAll: () => void;
   onTenderSelected: () => void;
   onRecallSelected: () => void;
+  onAcceptSelected: () => void;
+  onRejectSelected: () => void;
 };
 
 const batchTimes = Array.from({ length: 24 }, (_, hour) =>
@@ -18,6 +20,8 @@ export default function TenderActions({
   onSelectAll,
   onTenderSelected,
   onRecallSelected,
+  onAcceptSelected,
+  onRejectSelected,
 }: Props) {
   return (
     <div className="table-card">
@@ -36,6 +40,8 @@ export default function TenderActions({
         <button onClick={onSelectAll}>Select All / Clear</button>
         <button onClick={onTenderSelected}>Tender Selected</button>
         <button onClick={onRecallSelected}>Recall Selected</button>
+        <button onClick={onAcceptSelected}>Accept Selected</button>
+        <button onClick={onRejectSelected}>Reject Selected</button>
       </div>
 
       <p>{selectedCount} load(s) selected for batch tender.</p>

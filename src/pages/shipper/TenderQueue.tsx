@@ -26,7 +26,10 @@ export default function TenderQueue() {
     const result = await client.models.Load.list();
 
     const queueLoads = result.data.filter(
-      (load) => load.status === "READY_TO_TENDER" || load.status === "TENDERED"
+      (load) => load.status === "READY_TO_TENDER" ||
+        load.status === "TENDERED" ||
+        load.status === "ACCEPTED" ||
+        load.status === "REJECTED"
     );
 
     setLoads(queueLoads);
@@ -94,6 +97,50 @@ export default function TenderQueue() {
     await loadTenderQueue();
   }
 
+  async function acceptSelected() {
+    const selectedLoads = loads.filter((load) => selectedLoadIds.includes(load.id));
+
+    if (selectedLoads.length === 0) {
+      alert("Select at least one load to accept.");
+      return;
+    }
+
+    await Promise.all(
+      selectedLoads.map((load) =>
+        client.models.Load.update({
+          id: load.id,
+          status: "ACCEPTED",
+          notes: "Broker accepted tender.",
+        })
+      )
+    );
+
+    setSelectedLoadIds([]);
+    await loadTenderQueue();
+  }
+
+  async function rejectSelected() {
+    const selectedLoads = loads.filter((load) => selectedLoadIds.includes(load.id));
+
+    if (selectedLoads.length === 0) {
+      alert("Select at least one load to reject.");
+      return;
+    }
+
+    await Promise.all(
+      selectedLoads.map((load) =>
+        client.models.Load.update({
+          id: load.id,
+          status: "REJECTED",
+          notes: "Broker rejected tender.",
+        })
+      )
+    );
+
+    setSelectedLoadIds([]);
+    await loadTenderQueue();
+  }
+
   useEffect(() => {
     loadTenderQueue();
   }, []);
@@ -144,6 +191,8 @@ export default function TenderQueue() {
         onSelectAll={toggleSelectAll}
         onTenderSelected={tenderSelected}
         onRecallSelected={recallSelected}
+        onAcceptSelected={acceptSelected}
+        onRejectSelected={rejectSelected}
       />
 
       {isLoading ? (
