@@ -83,11 +83,28 @@ export default function Planning() {
     const newStore = prompt("Store Number", load.storeNumber || "");
     if (!newStore) return;
 
+    const newDate = prompt("Dispatch Date", load.dispatchDate || "");
+    if (!newDate) return;
+
+    const newDispatchTime = prompt("Dispatch Time", load.tripId || "16:00");
+    if (!newDispatchTime) return;
+
+    const newActivity = prompt("Activity Type", load.activityType || "D/S");
+    if (!newActivity) return;
+
+    const newEquipment = prompt("Equipment Type", load.equipmentType || "Power Only");
+    const newBroker = prompt("Broker", load.brokerName || "Beckers");
     const newRate = prompt("Rate", load.rate ? String(load.rate) : "0");
 
     await client.models.Load.update({
       id: load.id,
       storeNumber: newStore,
+      dispatchDate: newDate,
+      dispatchWindow: newDispatchTime,
+      tripId: newDispatchTime,
+      activityType: newActivity,
+      equipmentType: newEquipment || "",
+      brokerName: newBroker || "",
       rate: newRate ? Number(newRate) : 0,
     });
 
