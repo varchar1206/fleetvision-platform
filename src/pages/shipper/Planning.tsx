@@ -6,36 +6,51 @@ const client = generateClient<Schema>();
 
 type LoadRecord = Schema["Load"]["type"];
 
+const dispatchWindows = ["08:00", "16:00", "18:00", "20:00", "02:00", "04:00"];
+
 export default function Planning() {
   const [loads, setLoads] = useState<LoadRecord[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [storeNumber, setStoreNumber] = useState("");
+  const [dispatchDate, setDispatchDate] = useState("2026-06-24");
+  const [dispatchWindow, setDispatchWindow] = useState("16:00");
+  const [activityType, setActivityType] = useState("D/S");
+  const [equipmentType, setEquipmentType] = useState("Power Only");
+  const [brokerName, setBrokerName] = useState("Beckers");
+  const [rate, setRate] = useState("");
+
   async function loadPlanningRecords() {
     setIsLoading(true);
-
     const result = await client.models.Load.list();
-
     setLoads(result.data);
     setIsLoading(false);
   }
 
-  async function createSampleLoad() {
+  async function createLoadEntry() {
+    if (!storeNumber || !dispatchDate || !dispatchWindow || !activityType) {
+      alert("Store, date, dispatch window, and activity are required.");
+      return;
+    }
+
     await client.models.Load.create({
-      storeNumber: "S040",
-      dispatchDate: "2026-06-24",
-      dispatchWindow: "16:00",
-      activityType: "D/S",
-      equipmentType: "Power Only",
-      brokerName: "Beckers",
+      storeNumber,
+      dispatchDate,
+      dispatchWindow,
+      activityType,
+      equipmentType,
+      brokerName,
       carrierName: "",
       tripId: "",
-      rate: 1162,
+      rate: rate ? Number(rate) : 0,
       status: "DRAFT",
       bolStatus: "NOT_REQUIRED",
       createdBy: "USER001",
       notes: "Created from FleetVision Planning screen.",
     });
 
+    setStoreNumber("");
+    setRate("");
     await loadPlanningRecords();
   }
 
@@ -48,15 +63,34 @@ export default function Planning() {
       <div className="page-header">
         <div>
           <h2>Planning</h2>
-          <p>Create and manage future loads before trip IDs are assigned.</p>
+          <p>Create individual loads, then group them by dispatch window for tendering.</p>
         </div>
       </div>
 
-      <div className="action-row">
-        <button onClick={createSampleLoad}>Create Load Entry</button>
-        <button>Create From Last Week</button>
-        <button>Bulk Paste Loads</button>
-        <button>CSV Upload</button>
+      <div className="table-card">
+        <h2>Create Load Entry</h2>
+
+        <div className="action-row">
+          <input placeholder="Store Number" value={storeNumber} onChange={(e) => setStoreNumber(e.target.value)} />
+          <input type="date" value={dispatchDate} onChange={(e) => setDispatchDate(e.target.value)} />
+
+          <select value={dispatchWindow} onChange={(e) => setDispatchWindow(e.target.value)}>
+            {dispatchWindows.map((window) => (
+              <option key={window} value={window}>{window}</option>
+            ))}
+          </select>
+
+          <select value={activityType} onChange={(e) => setActivityType(e.target.value)}>
+            <option value="D/S">D/S</option>
+            <option value="Unload">Unload</option>
+          </select>
+
+          <input value={equipmentType} onChange={(e) => setEquipmentType(e.target.value)} />
+          <input value={brokerName} onChange={(e) => setBrokerName(e.target.value)} />
+          <input placeholder="Rate" value={rate} onChange={(e) => setRate(e.target.value)} />
+
+          <button onClick={createLoadEntry}>Save Load</button>
+        </div>
       </div>
 
       <div className="dashboard-grid">
@@ -71,8 +105,8 @@ export default function Planning() {
         </div>
 
         <div className="card">
-          <h2>Archived Plans</h2>
-          <p>Historical planning records available.</p>
+          <h2>Dispatch Windows</h2>
+          <p>08:00, 16:00, 18:00, 20:00, 02:00, 04:00</p>
         </div>
 
         <div className="card">
