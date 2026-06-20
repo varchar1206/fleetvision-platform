@@ -171,13 +171,25 @@ export default function Planning() {
     await loadPlanningRecords();
   }
 
-  function sendSelectedToTenderQueue() {
-    if (selectedLoadIds.length === 0) {
+  async function sendSelectedToTenderQueue() {
+    const selectedLoads = loads.filter((load) => selectedLoadIds.includes(load.id));
+
+    if (selectedLoads.length === 0) {
       alert("Select at least one load first.");
       return;
     }
 
-    alert("Send Selected To Tender Queue workflow is next.");
+    await Promise.all(
+      selectedLoads.map((load) =>
+        client.models.Load.update({
+          id: load.id,
+          status: "READY_TO_TENDER",
+        })
+      )
+    );
+
+    setSelectedLoadIds([]);
+    await loadPlanningRecords();
   }
 
   useEffect(() => {
