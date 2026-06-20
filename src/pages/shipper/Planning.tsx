@@ -1,40 +1,48 @@
-const plannedLoads = [
-  {
-    date: "2026-06-24",
-    day: "Wed",
-    store: "S040",
-    dispatchTime: "16:00",
-    activity: "D/S",
-    equipment: "Power Only",
-    broker: "Beckers",
-    rate: "$1,162.00",
-    status: "Draft",
-  },
-  {
-    date: "2026-06-24",
-    day: "Wed",
-    store: "S047",
-    dispatchTime: "16:00",
-    activity: "D/S",
-    equipment: "Power Only",
-    broker: "Beckers",
-    rate: "$1,166.00",
-    status: "Draft",
-  },
-  {
-    date: "2026-06-24",
-    day: "Wed",
-    store: "S060",
-    dispatchTime: "20:00",
-    activity: "Unload",
-    equipment: "Power Only",
-    broker: "Beckers",
-    rate: "$1,162.00",
-    status: "Draft",
-  },
-];
+import { useEffect, useState } from "react";
+import { generateClient } from "aws-amplify/data";
+import type { Schema } from "../../../amplify/data/resource";
+
+const client = generateClient<Schema>();
+
+type LoadRecord = Schema["Load"]["type"];
 
 export default function Planning() {
+  const [loads, setLoads] = useState<LoadRecord[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  async function loadPlanningRecords() {
+    setIsLoading(true);
+
+    const result = await client.models.Load.list();
+
+    setLoads(result.data);
+    setIsLoading(false);
+  }
+
+  async function createSampleLoad() {
+    await client.models.Load.create({
+      storeNumber: "S040",
+      dispatchDate: "2026-06-24",
+      dispatchWindow: "16:00",
+      activityType: "D/S",
+      equipmentType: "Power Only",
+      brokerName: "Beckers",
+      carrierName: "",
+      tripId: "",
+      rate: 1162,
+      status: "DRAFT",
+      bolStatus: "NOT_REQUIRED",
+      createdBy: "USER001",
+      notes: "Created from FleetVision Planning screen.",
+    });
+
+    await loadPlanningRecords();
+  }
+
+  useEffect(() => {
+    loadPlanningRecords();
+  }, []);
+
   return (
     <section>
       <div className="page-header">
@@ -45,7 +53,7 @@ export default function Planning() {
       </div>
 
       <div className="action-row">
-        <button>Create Load Entry</button>
+        <button onClick={createSampleLoad}>Create Load Entry</button>
         <button>Create From Last Week</button>
         <button>Bulk Paste Loads</button>
         <button>CSV Upload</button>
@@ -54,12 +62,12 @@ export default function Planning() {
       <div className="dashboard-grid">
         <div className="card">
           <h2>Draft Plans</h2>
-          <p>2 plans currently being prepared.</p>
+          <p>{loads.filter((load) => load.status === "DRAFT").length} draft loads.</p>
         </div>
 
         <div className="card">
           <h2>Published Plans</h2>
-          <p>1 plan ready for tendering.</p>
+          <p>{loads.filter((load) => load.status === "PUBLISHED").length} published loads.</p>
         </div>
 
         <div className="card">
@@ -74,37 +82,41 @@ export default function Planning() {
       </div>
 
       <div className="table-card">
-        <h2>Week 25 Draft Plan</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Day</th>
-              <th>Store</th>
-              <th>Dispatch</th>
-              <th>Activity</th>
-              <th>Equipment</th>
-              <th>Broker</th>
-              <th>Rate</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {plannedLoads.map((load) => (
-              <tr key={`${load.date}-${load.store}-${load.dispatchTime}`}>
-                <td>{load.date}</td>
-                <td>{load.day}</td>
-                <td>{load.store}</td>
-                <td>{load.dispatchTime}</td>
-                <td>{load.activity}</td>
-                <td>{load.equipment}</td>
-                <td>{load.broker}</td>
-                <td>{load.rate}</td>
-                <td>{load.status}</td>
+        <h2>Planning Loads</h2>
+
+        {isLoading ? (
+          <p>Loading planning records...</p>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Store</th>
+                <th>Dispatch</th>
+                <th>Activity</th>
+                <th>Equipment</th>
+                <th>Broker</th>
+                <th>Rate</th>
+                <th>Status</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {loads.map((load) => (
+                <tr key={load.id}>
+                  <td>{load.dispatchDate}</td>
+                  <td>{load.storeNumber}</td>
+                  <td>{load.dispatchWindow}</td>
+                  <td>{load.activityType}</td>
+                  <td>{load.equipmentType}</td>
+                  <td>{load.brokerName}</td>
+                  <td>{load.rate ? `$${load.rate.toFixed(2)}` : ""}</td>
+                  <td>{load.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </section>
   );
