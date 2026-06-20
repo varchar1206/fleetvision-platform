@@ -109,12 +109,24 @@ export default function BrokerTenderQueue() {
 
     await Promise.all(
       selectedLoads.map((load) =>
-        client.models.Load.update({
-          id: load.id,
-          carrierName: selectedCarrier,
-          status: "ASSIGNED_TO_CARRIER",
-          notes: `Assigned to carrier ${selectedCarrier}.`,
-        })
+        Promise.all([
+          client.models.Load.update({
+            id: load.id,
+            carrierName: selectedCarrier,
+            status: "ASSIGNED_TO_CARRIER",
+            notes: `Assigned to carrier ${selectedCarrier}.`,
+          }),
+          client.models.Notification.create({
+            loadId: load.id,
+            eventType: "CARRIER_ASSIGNED",
+            audience: "Carrier",
+            title: "Load Assigned",
+            message: `Load for store ${load.storeNumber} assigned to ${selectedCarrier}.`,
+            channel: "IN_APP",
+            status: "UNREAD",
+            createdAt: new Date().toISOString(),
+          }),
+        ])
       )
     );
 
