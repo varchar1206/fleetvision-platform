@@ -7,6 +7,9 @@ const client = generateClient<Schema>();
 type LoadRecord = Schema["Load"]["type"];
 
 const dispatchWindows = ["08:00", "16:00", "18:00", "20:00", "02:00", "04:00"];
+const dispatchHours = Array.from({ length: 24 }, (_, hour) =>
+  `${String(hour).padStart(2, "0")}:00`
+);
 
 export default function Planning() {
   const [loads, setLoads] = useState<LoadRecord[]>([]);
@@ -15,6 +18,7 @@ export default function Planning() {
   const [storeNumber, setStoreNumber] = useState("");
   const [dispatchDate, setDispatchDate] = useState("2026-06-24");
   const [dispatchWindow, setDispatchWindow] = useState("16:00");
+  const [dispatchHour, setDispatchHour] = useState("16:00");
   const [activityType, setActivityType] = useState("D/S");
   const [equipmentType, setEquipmentType] = useState("Power Only");
   const [brokerName, setBrokerName] = useState("Beckers");
@@ -41,7 +45,7 @@ export default function Planning() {
       equipmentType,
       brokerName,
       carrierName: "",
-      tripId: "",
+      tripId: dispatchHour,
       rate: rate ? Number(rate) : 0,
       status: "DRAFT",
       bolStatus: "NOT_REQUIRED",
@@ -51,6 +55,19 @@ export default function Planning() {
 
     setStoreNumber("");
     setRate("");
+    await loadPlanningRecords();
+  }
+
+  async function deleteLoad(load: LoadRecord) {
+    if (load.status !== "DRAFT") {
+      alert("Only draft loads can be deleted from Planning. Tendered or active loads must use recall/cancel workflow.");
+      return;
+    }
+
+    const confirmed = confirm(`Delete draft load for ${load.storeNumber}?`);
+    if (!confirmed) return;
+
+    await client.models.Load.delete({ id: load.id });
     await loadPlanningRecords();
   }
 
@@ -76,7 +93,13 @@ export default function Planning() {
 
           <select value={dispatchWindow} onChange={(e) => setDispatchWindow(e.target.value)}>
             {dispatchWindows.map((window) => (
-              <option key={window} value={window}>{window}</option>
+              <option key={window} value={window}>{window} Window</option>
+            ))}
+          </select>
+
+          <select value={dispatchHour} onChange={(e) => setDispatchHour(e.target.value)}>
+            {dispatchHours.map((hour) => (
+              <option key={hour} value={hour}>{hour}</option>
             ))}
           </select>
 
@@ -110,8 +133,8 @@ export default function Planning() {
         </div>
 
         <div className="card">
-          <h2>Default View</h2>
-          <p>Grid View active. Calendar View available later.</p>
+          <h2>Dispatch Hours</h2>
+          <p>0000 through 2300 available.</p>
         </div>
       </div>
 
@@ -126,12 +149,14 @@ export default function Planning() {
               <tr>
                 <th>Date</th>
                 <th>Store</th>
-                <th>Dispatch</th>
+                <th>Window</th>
+                <th>Dispatch Hour</th>
                 <th>Activity</th>
                 <th>Equipment</th>
                 <th>Broker</th>
                 <th>Rate</th>
                 <th>Status</th>
+                <th>Action</th>
               </tr>
             </thead>
 
@@ -141,11 +166,15 @@ export default function Planning() {
                   <td>{load.dispatchDate}</td>
                   <td>{load.storeNumber}</td>
                   <td>{load.dispatchWindow}</td>
+                  <td>{load.tripId}</td>
                   <td>{load.activityType}</td>
                   <td>{load.equipmentType}</td>
                   <td>{load.brokerName}</td>
                   <td>{load.rate ? `$${load.rate.toFixed(2)}` : ""}</td>
                   <td>{load.status}</td>
+                  <td>
+                    <button onClick={() => deleteLoad(load)}>Delete</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
