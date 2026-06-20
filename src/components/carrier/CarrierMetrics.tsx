@@ -8,7 +8,7 @@ type Props = {
 };
 
 export default function CarrierMetrics({ loads, selectedCount }: Props) {
-  const assigned = loads.filter((load) => load.status === "ACCEPTED").length;
+  const assigned = loads.filter((load) => load.status === "ASSIGNED_TO_CARRIER").length;
   const accepted = loads.filter((load) => load.status === "CARRIER_ACCEPTED").length;
   const rejected = loads.filter((load) => load.status === "CARRIER_REJECTED").length;
 

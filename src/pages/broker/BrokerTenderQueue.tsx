@@ -112,6 +112,7 @@ export default function BrokerTenderQueue() {
         client.models.Load.update({
           id: load.id,
           carrierName: selectedCarrier,
+          status: "ASSIGNED_TO_CARRIER",
           notes: `Assigned to carrier ${selectedCarrier}.`,
         })
       )

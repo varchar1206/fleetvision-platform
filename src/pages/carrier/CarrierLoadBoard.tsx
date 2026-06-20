@@ -24,7 +24,7 @@ export default function CarrierLoadBoard() {
       result.data.filter(
         (load) =>
           load.carrierName &&
-          (load.status === "ACCEPTED" ||
+          (load.status === "ASSIGNED_TO_CARRIER" ||
             load.status === "CARRIER_ACCEPTED" ||
             load.status === "CARRIER_REJECTED")
       )
