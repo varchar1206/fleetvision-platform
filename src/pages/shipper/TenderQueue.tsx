@@ -4,6 +4,7 @@ import type { Schema } from "../../../amplify/data/resource";
 
 import TenderActions from "../../components/tender/TenderActions";
 import TenderGrid from "../../components/tender/TenderGrid";
+import TenderFilters from "../../components/tender/TenderFilters";
 import TenderMetrics from "../../components/tender/TenderMetrics";
 
 const client = generateClient<Schema>();
@@ -15,6 +16,9 @@ export default function TenderQueue() {
   const [selectedLoadIds, setSelectedLoadIds] = useState<string[]>([]);
   const [batchTenderTime, setBatchTenderTime] = useState("16:00");
   const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("ALL");
+  const [dateFilter, setDateFilter] = useState("");
 
   async function loadTenderQueue() {
     setIsLoading(true);
@@ -94,6 +98,20 @@ export default function TenderQueue() {
     loadTenderQueue();
   }, []);
 
+  const filteredLoads = loads.filter((load) => {
+    const searchValue = searchTerm.toLowerCase();
+
+    const matchesSearch =
+      load.storeNumber?.toLowerCase().includes(searchValue) ||
+      load.brokerName?.toLowerCase().includes(searchValue) ||
+      load.status?.toLowerCase().includes(searchValue);
+
+    const matchesStatus = statusFilter === "ALL" || load.status === statusFilter;
+    const matchesDate = !dateFilter || load.dispatchDate === dateFilter;
+
+    return matchesSearch && matchesStatus && matchesDate;
+  });
+
   return (
     <section>
       <div className="page-header">
@@ -104,6 +122,20 @@ export default function TenderQueue() {
       </div>
 
       <TenderMetrics loads={loads} selectedCount={selectedLoadIds.length} />
+
+      <TenderFilters
+        searchTerm={searchTerm}
+        statusFilter={statusFilter}
+        dateFilter={dateFilter}
+        onSearchChange={setSearchTerm}
+        onStatusChange={setStatusFilter}
+        onDateChange={setDateFilter}
+        onClear={() => {
+          setSearchTerm("");
+          setStatusFilter("ALL");
+          setDateFilter("");
+        }}
+      />
 
       <TenderActions
         selectedCount={selectedLoadIds.length}
@@ -120,7 +152,7 @@ export default function TenderQueue() {
         </div>
       ) : (
         <TenderGrid
-          loads={loads}
+          loads={filteredLoads}
           selectedLoadIds={selectedLoadIds}
           onToggleSelected={toggleSelected}
         />
