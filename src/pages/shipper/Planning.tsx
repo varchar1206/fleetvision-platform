@@ -275,7 +275,7 @@ export default function Planning() {
           <p>${totalPlannedCost.toFixed(2)}</p>
         </div>
       </div>
-      <BulkLoadTools />   
+      <BulkLoadTools onLoadsCreated={loadPlanningRecords} />   
       <div className="table-card">
         <h2>Search & Filters</h2>
         <div className="action-row">
