@@ -1,13 +1,9 @@
-type NotificationItem = {
-  id: string;
-  type: string;
-  message: string;
-  audience: string;
-  status: string;
-};
+import type { Schema } from "../../../amplify/data/resource";
+
+type NotificationRecord = Schema["Notification"]["type"];
 
 type Props = {
-  notifications: NotificationItem[];
+  notifications: NotificationRecord[];
 };
 
 export default function NotificationGrid({ notifications }: Props) {
@@ -18,9 +14,11 @@ export default function NotificationGrid({ notifications }: Props) {
       <table>
         <thead>
           <tr>
-            <th>Type</th>
+            <th>Event</th>
             <th>Audience</th>
+            <th>Title</th>
             <th>Message</th>
+            <th>Channel</th>
             <th>Status</th>
           </tr>
         </thead>
@@ -28,9 +26,11 @@ export default function NotificationGrid({ notifications }: Props) {
         <tbody>
           {notifications.map((item) => (
             <tr key={item.id}>
-              <td>{item.type}</td>
+              <td>{item.eventType}</td>
               <td>{item.audience}</td>
+              <td>{item.title}</td>
               <td>{item.message}</td>
+              <td>{item.channel}</td>
               <td>{item.status}</td>
             </tr>
           ))}
