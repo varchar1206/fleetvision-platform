@@ -12,6 +12,7 @@ import ActiveLoads from "./pages/shipper/ActiveLoads";
 import CompletedLoads from "./pages/shipper/CompletedLoads";
 import Exceptions from "./pages/shipper/Exceptions";
 import Performance from "./pages/shipper/Performance";
+import NotificationCenter from "./pages/notifications/NotificationCenter";
 
 import BrokerDashboard from "./pages/broker/BrokerDashboard";
 import BrokerTenderQueue from "./pages/broker/BrokerTenderQueue";
@@ -34,6 +35,7 @@ function App() {
           <Route path="completed-loads" element={<CompletedLoads />} />
           <Route path="exceptions" element={<Exceptions />} />
           <Route path="performance" element={<Performance />} />
+          <Route path="notifications" element={<NotificationCenter />} />
         </Route>
 
         <Route path="/broker" element={<BrokerLayout />}>

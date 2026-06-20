@@ -8,6 +8,7 @@ const navItems = [
   { path: "/completed-loads", label: "Completed Loads" },
   { path: "/exceptions", label: "Exceptions" },
   { path: "/performance", label: "Performance" },
+  { path: "/notifications", label: "Notifications" },
 ];
 
 export default function ShipperLayout() {
