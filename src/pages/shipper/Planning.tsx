@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import BulkLoadTools from "../../components/planning/BulkLoadTools";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../../../amplify/data/resource";
 
@@ -274,7 +275,7 @@ export default function Planning() {
           <p>${totalPlannedCost.toFixed(2)}</p>
         </div>
       </div>
-
+      <BulkLoadTools />   
       <div className="table-card">
         <h2>Search & Filters</h2>
         <div className="action-row">
