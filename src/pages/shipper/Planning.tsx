@@ -22,6 +22,9 @@ export default function Planning() {
   const [equipmentType, setEquipmentType] = useState("Power Only");
   const [brokerName, setBrokerName] = useState("Beckers");
   const [rate, setRate] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("ALL");
+  const [dateFilter, setDateFilter] = useState("");
 
   async function loadPlanningRecords() {
     setIsLoading(true);
@@ -196,7 +199,24 @@ export default function Planning() {
     loadPlanningRecords();
   }, []);
 
-  const totalPlannedCost = loads.reduce((sum, load) => sum + (load.rate || 0), 0);
+  const filteredLoads = loads.filter((load) => {
+    const searchValue = searchTerm.toLowerCase();
+
+    const matchesSearch =
+      load.storeNumber?.toLowerCase().includes(searchValue) ||
+      load.brokerName?.toLowerCase().includes(searchValue) ||
+      load.status?.toLowerCase().includes(searchValue);
+
+    const matchesStatus =
+      statusFilter === "ALL" || load.status === statusFilter;
+
+    const matchesDate =
+      !dateFilter || load.dispatchDate === dateFilter;
+
+    return matchesSearch && matchesStatus && matchesDate;
+  });
+
+  const totalPlannedCost = filteredLoads.reduce((sum, load) => sum + (load.rate || 0), 0);
 
   return (
     <section>
@@ -256,6 +276,31 @@ export default function Planning() {
       </div>
 
       <div className="table-card">
+        <h2>Search & Filters</h2>
+        <div className="action-row">
+          <input
+            placeholder="Search store, broker, or status"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+
+          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+            <option value="ALL">All Statuses</option>
+            <option value="DRAFT">Draft</option>
+            <option value="PUBLISHED">Published</option>
+            <option value="READY_TO_TENDER">Ready To Tender</option>
+            <option value="TENDERED">Tendered</option>
+          </select>
+
+          <input type="date" value={dateFilter} onChange={(e) => setDateFilter(e.target.value)} />
+
+          <button onClick={() => { setSearchTerm(""); setStatusFilter("ALL"); setDateFilter(""); }}>
+            Clear Filters
+          </button>
+        </div>
+      </div>
+
+      <div className="table-card">
         <h2>Bulk Actions</h2>
         <div className="action-row">
           <button onClick={toggleSelectAll}>Select All / Clear</button>
@@ -289,7 +334,7 @@ export default function Planning() {
             </thead>
 
             <tbody>
-              {loads.map((load) => (
+              {filteredLoads.map((load) => (
                 <tr key={load.id}>
                   <td>
                     <input
