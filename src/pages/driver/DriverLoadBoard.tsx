@@ -77,6 +77,14 @@ export default function DriverLoadBoard() {
           status: "UNREAD",
           createdAt: new Date().toISOString(),
         }),
+
+        client.models.LoadEvent.create({
+          loadId: selectedLoad.id,
+          eventType: "LOAD_DELIVERED",
+          eventTime: new Date().toISOString(),
+          eventSource: "Driver",
+          notes: `Load for store ${selectedLoad.storeNumber} delivered.`,
+        }),
       ]);
     }
 
