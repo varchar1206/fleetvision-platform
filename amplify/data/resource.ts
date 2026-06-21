@@ -128,6 +128,27 @@ const schema = a.schema({
       notes: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
+
+  Location: a
+    .model({
+      locationName: a.string().required(),
+      storeNumber: a.string().required(),
+      trailerSize: a.string(),
+      streetAddress: a.string(),
+      city: a.string(),
+      state: a.string(),
+      zipCode: a.string(),
+      county: a.string(),
+      commitmentTime: a.string(),
+      oneWayTravelTime: a.string(),
+
+      latitude: a.float(),
+      longitude: a.float(),
+      geofenceRadiusFeet: a.integer(),
+
+      locationType: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
