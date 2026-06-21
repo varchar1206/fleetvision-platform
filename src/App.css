@@ -1,6 +1,21 @@
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #f4f7fb;
+}
+
 .app-shell {
   min-height: 100vh;
-  padding: 32px;
+  padding: 24px;
   background: #f4f7fb;
   color: #1f2937;
   font-family: Arial, sans-serif;
@@ -10,12 +25,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  gap: 16px;
+  margin-bottom: 20px;
 }
 
 .top-bar h1 {
   margin: 0;
-  font-size: 36px;
+  font-size: 34px;
 }
 
 .top-bar p {
@@ -29,39 +45,50 @@
   padding: 10px 16px;
   border-radius: 999px;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .nav-tabs {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
-.nav-tabs button {
-  border: none;
+.nav-tabs a {
+  text-decoration: none;
   background: white;
+  color: #1f2937;
   padding: 12px 16px;
   border-radius: 10px;
   font-weight: 700;
-  cursor: pointer;
   box-shadow: 0 1px 4px rgba(15, 23, 42, 0.12);
+}
+
+.nav-tabs a.active {
+  background: #1e40af;
+  color: white;
 }
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(260px, 1fr));
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
   gap: 18px;
 }
 
-.card {
+.card,
+.table-card {
   background: white;
-  padding: 24px;
   border-radius: 16px;
   box-shadow: 0 1px 6px rgba(15, 23, 42, 0.12);
 }
 
-.card h2 {
+.card {
+  padding: 22px;
+}
+
+.card h2,
+.table-card h2 {
   margin-top: 0;
 }
 
@@ -86,9 +113,10 @@
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
+button,
 .action-row button {
   border: none;
   background: #1e40af;
@@ -99,22 +127,26 @@
   cursor: pointer;
 }
 
-.table-card {
-  margin-top: 24px;
-  background: white;
-  padding: 24px;
-  border-radius: 16px;
-  box-shadow: 0 1px 6px rgba(15, 23, 42, 0.12);
-  overflow-x: auto;
+input,
+select,
+textarea {
+  padding: 11px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font: inherit;
+  max-width: 100%;
 }
 
-.table-card h2 {
-  margin-top: 0;
+.table-card {
+  margin-top: 24px;
+  padding: 22px;
+  overflow-x: auto;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 760px;
 }
 
 th,
@@ -129,13 +161,60 @@ th {
   font-size: 14px;
 }
 
-html,
-body,
-#root {
-  min-height: 100%;
-  margin: 0;
-}
+@media (max-width: 768px) {
+  .app-shell {
+    padding: 16px;
+  }
 
-.app-shell {
-  padding-top: 48px;
+  .top-bar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .top-bar h1 {
+    font-size: 28px;
+  }
+
+  .role-badge {
+    align-self: flex-start;
+  }
+
+  .nav-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .nav-tabs a {
+    white-space: nowrap;
+    flex: 0 0 auto;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .action-row {
+    flex-direction: column;
+  }
+
+  .action-row button,
+  .action-row input,
+  .action-row select,
+  .action-row textarea,
+  button,
+  input,
+  select,
+  textarea {
+    width: 100%;
+  }
+
+  .table-card {
+    padding: 16px;
+  }
 }
