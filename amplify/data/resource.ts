@@ -123,6 +123,7 @@ const schema = a.schema({
       longitude: a.float().required(),
       recordedAt: a.string().required(),
       source: a.string(),
+      locationMethod: a.string(),
       accuracyMeters: a.float(),
       notes: a.string(),
     })
