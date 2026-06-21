@@ -126,6 +126,14 @@ export default function BrokerTenderQueue() {
             status: "UNREAD",
             createdAt: new Date().toISOString(),
           }),
+
+          client.models.LoadEvent.create({
+            loadId: load.id,
+            eventType: "CARRIER_ASSIGNED",
+            eventTime: new Date().toISOString(),
+            eventSource: "Broker",
+            notes: `Assigned to carrier ${selectedCarrier}.`,
+          }),
         ])
       )
     );
