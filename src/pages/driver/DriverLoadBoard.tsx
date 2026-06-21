@@ -22,7 +22,18 @@ export default function DriverLoadBoard() {
 
     setLoads(
       result.data.filter((load) =>
-        ["ASSIGNED_TO_DRIVER", "DISPATCHED", "ARRIVED_AT_PICKUP", "LOADED", "IN_TRANSIT", "ARRIVED_AT_DELIVERY", "DELIVERED"].includes(load.status || "")
+        [
+          "ASSIGNED_TO_DRIVER",
+          "DISPATCHED",
+          "IN_ROUTE_TO_PICKUP",
+          "ARRIVED_AT_PICKUP",
+          "LOADED",
+          "DEPARTED_PICKUP",
+          "IN_ROUTE_TO_DELIVERY",
+          "ARRIVED_AT_DELIVERY",
+          "DELIVERED",
+          "RETURNED_TO_WAREHOUSE",
+        ].includes(load.status || "")
       )
     );
 
@@ -37,13 +48,42 @@ export default function DriverLoadBoard() {
 
     const selectedLoad = loads.find((load) => load.id === selectedLoadId);
 
-    await client.models.Load.update({
-      id: selectedLoadId,
-      status,
-      notes: note,
-    });
+    if (!selectedLoad) {
+      alert("Selected load not found.");
+      return;
+    }
 
-    if (status === "DELIVERED" && selectedLoad) {
+    const now = new Date().toISOString();
+
+    await Promise.all([
+      client.models.Load.update({
+        id: selectedLoadId,
+        status,
+        notes: note,
+      }),
+
+      client.models.DriverLocation.create({
+        loadId: selectedLoad.id,
+        driverName: "Driver",
+        carrierName: selectedLoad.carrierName || "",
+        latitude: 0,
+        longitude: 0,
+        recordedAt: now,
+        source: status,
+        locationMethod: "DRIVER_ATTESTATION",
+        notes: note,
+      }),
+
+      client.models.LoadEvent.create({
+        loadId: selectedLoad.id,
+        eventType: status,
+        eventTime: now,
+        eventSource: "Driver",
+        notes: note,
+      }),
+    ]);
+
+    if (status === "DELIVERED") {
       await Promise.all([
         client.models.Notification.create({
           loadId: selectedLoad.id,
@@ -53,7 +93,7 @@ export default function DriverLoadBoard() {
           message: `Load for store ${selectedLoad.storeNumber} has been delivered.`,
           channel: "IN_APP",
           status: "UNREAD",
-          createdAt: new Date().toISOString(),
+          createdAt: now,
         }),
 
         client.models.Notification.create({
@@ -64,7 +104,7 @@ export default function DriverLoadBoard() {
           message: `Load for store ${selectedLoad.storeNumber} has been delivered.`,
           channel: "IN_APP",
           status: "UNREAD",
-          createdAt: new Date().toISOString(),
+          createdAt: now,
         }),
 
         client.models.Notification.create({
@@ -75,15 +115,7 @@ export default function DriverLoadBoard() {
           message: `Load for store ${selectedLoad.storeNumber} has been delivered.`,
           channel: "IN_APP",
           status: "UNREAD",
-          createdAt: new Date().toISOString(),
-        }),
-
-        client.models.LoadEvent.create({
-          loadId: selectedLoad.id,
-          eventType: "LOAD_DELIVERED",
-          eventTime: new Date().toISOString(),
-          eventSource: "Driver",
-          notes: `Load for store ${selectedLoad.storeNumber} delivered.`,
+          createdAt: now,
         }),
       ]);
     }
@@ -100,7 +132,7 @@ export default function DriverLoadBoard() {
       <div className="page-header">
         <div>
           <h2>Driver Portal</h2>
-          <p>Update pickup, transit, and delivery milestones.</p>
+          <p>Update route, pickup, delivery, and return-to-warehouse milestones.</p>
         </div>
       </div>
 
@@ -108,12 +140,27 @@ export default function DriverLoadBoard() {
 
       <DriverActions
         selectedCount={selectedLoadId ? 1 : 0}
-        onArrivedPickup={() => updateSelectedStatus("ARRIVED_AT_PICKUP", "Driver arrived at pickup.")}
-        onLoaded={() => updateSelectedStatus("LOADED", "Load has been loaded.")}
-        onInTransit={() => updateSelectedStatus("IN_TRANSIT", "Driver is in transit.")}
-        onArrivedDelivery={() => updateSelectedStatus("ARRIVED_AT_DELIVERY", "Driver arrived at delivery.")}
-        onDelivered={() => updateSelectedStatus("DELIVERED", "Load delivered.")}
+        onArrivedPickup={() => updateSelectedStatus("ARRIVED_AT_PICKUP", "Driver attested arrival at pickup.")}
+        onLoaded={() => updateSelectedStatus("LOADED", "Driver attested load has been loaded.")}
+        onInTransit={() => updateSelectedStatus("IN_ROUTE_TO_DELIVERY", "Driver attested in route to delivery.")}
+        onArrivedDelivery={() => updateSelectedStatus("ARRIVED_AT_DELIVERY", "Driver attested arrival at delivery.")}
+        onDelivered={() => updateSelectedStatus("DELIVERED", "Driver attested load delivered.")}
       />
+
+      <div className="table-card">
+        <h2>Additional Check-Ins</h2>
+        <div className="action-row">
+          <button onClick={() => updateSelectedStatus("IN_ROUTE_TO_PICKUP", "Driver attested in route to pickup.")}>
+            In Route to Pickup
+          </button>
+          <button onClick={() => updateSelectedStatus("DEPARTED_PICKUP", "Driver attested departure from pickup.")}>
+            Departed Pickup
+          </button>
+          <button onClick={() => updateSelectedStatus("RETURNED_TO_WAREHOUSE", "Driver attested return to warehouse.")}>
+            Returned to Warehouse
+          </button>
+        </div>
+      </div>
 
       {isLoading ? (
         <div className="table-card">
