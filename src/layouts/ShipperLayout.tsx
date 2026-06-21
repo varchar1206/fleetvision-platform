@@ -9,6 +9,7 @@ const navItems = [
   { path: "/exceptions", label: "Exceptions" },
   { path: "/performance", label: "Performance" },
   { path: "/notifications", label: "Notifications" },
+  { path: "/events", label: "Events" },
 ];
 
 export default function ShipperLayout() {
