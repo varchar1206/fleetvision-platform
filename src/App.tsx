@@ -14,6 +14,7 @@ import Exceptions from "./pages/shipper/Exceptions";
 import Performance from "./pages/shipper/Performance";
 import NotificationCenter from "./pages/notifications/NotificationCenter";
 import LoadEventHistory from "./pages/events/LoadEventHistory";
+import LocationTracking from "./pages/gps/LocationTracking";
 
 import BrokerDashboard from "./pages/broker/BrokerDashboard";
 import BrokerTenderQueue from "./pages/broker/BrokerTenderQueue";
@@ -38,6 +39,7 @@ function App() {
           <Route path="performance" element={<Performance />} />
           <Route path="notifications" element={<NotificationCenter />} />
           <Route path="events" element={<LoadEventHistory />} />
+          <Route path="gps" element={<LocationTracking />} />
         </Route>
 
         <Route path="/broker" element={<BrokerLayout />}>
