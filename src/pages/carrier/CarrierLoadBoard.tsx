@@ -88,6 +88,14 @@ async function acceptSelected() {
           status: "UNREAD",
           createdAt: new Date().toISOString(),
         }),
+
+        client.models.LoadEvent.create({
+          loadId: load.id,
+          eventType: "CARRIER_ACCEPTED",
+          eventTime: new Date().toISOString(),
+          eventSource: "Carrier",
+          notes: `${load.carrierName} accepted load ${load.storeNumber}.`,
+        }),
       ])
     )
   );
