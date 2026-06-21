@@ -113,6 +113,20 @@ const schema = a.schema({
       status: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
+
+  DriverLocation: a
+    .model({
+      loadId: a.string().required(),
+      driverName: a.string(),
+      carrierName: a.string(),
+      latitude: a.float().required(),
+      longitude: a.float().required(),
+      recordedAt: a.string().required(),
+      source: a.string(),
+      accuracyMeters: a.float(),
+      notes: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
