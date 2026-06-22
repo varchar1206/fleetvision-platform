@@ -255,3 +255,31 @@ body,
     padding: 16px;
   }
 }
+
+/* Phase 1C: table polish */
+table {
+  font-size: 14px;
+}
+
+tbody tr:hover {
+  background: #f8fafc;
+}
+
+th {
+  background: #f8fafc;
+  font-weight: 800;
+}
+
+td {
+  vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+  table {
+    min-width: 760px;
+  }
+
+  .table-card {
+    overflow-x: auto;
+  }
+}
