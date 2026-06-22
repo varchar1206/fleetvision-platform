@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import BulkLoadTools from "../../components/planning/BulkLoadTools";
 import PlanningTimeUpdateTools from "../../components/planning/PlanningTimeUpdateTools";
+import PlanningEtaCell from "../../components/planning/PlanningEtaCell";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../../../amplify/data/resource";
 
@@ -419,6 +420,14 @@ export default function Planning() {
                   <td>{load.storeName}</td>
                   <td>{load.commitmentTime}</td>
                   <td>{load.plannedTravelTime}</td>
+                  <td>
+                    <PlanningEtaCell
+                      dispatchDate={load.dispatchDate}
+                      dispatchTime={load.dispatchWindow}
+                      travelTime={load.plannedTravelTime}
+                      commitmentTime={load.commitmentTime}
+                    />
+                  </td>
                   <td>{load.tripId}</td>
                   <td>{load.activityType}</td>
                   <td>{load.equipmentType}</td>
