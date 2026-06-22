@@ -206,3 +206,52 @@ body,
 .table-card {
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
 }
+
+/* Phase 1B: mobile foundation */
+@media (max-width: 768px) {
+  .app-shell {
+    padding: 16px;
+  }
+
+  .top-bar {
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .top-bar h1 {
+    font-size: 28px;
+  }
+
+  .nav-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 8px;
+  }
+
+  .nav-tabs a {
+    white-space: nowrap;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .action-row {
+    flex-direction: column;
+  }
+
+  .action-row input,
+  .action-row select,
+  .action-row button {
+    width: 100%;
+  }
+
+  .table-card {
+    padding: 16px;
+  }
+}
