@@ -16,6 +16,7 @@ import NotificationCenter from "./pages/notifications/NotificationCenter";
 import LoadEventHistory from "./pages/events/LoadEventHistory";
 import LocationTracking from "./pages/gps/LocationTracking";
 import LocationMaster from "./pages/locations/LocationMaster";
+import DeveloperPortal from "./pages/developer/DeveloperPortal";
 
 import BrokerDashboard from "./pages/broker/BrokerDashboard";
 import BrokerTenderQueue from "./pages/broker/BrokerTenderQueue";
@@ -29,6 +30,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/developer" element={<DeveloperPortal />} />
 
         <Route path="/" element={<ShipperLayout />}>
           <Route index element={<ShipperDashboard />} />
