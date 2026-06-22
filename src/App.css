@@ -312,3 +312,34 @@ button:hover {
 button:active {
   transform: translateY(0);
 }
+
+/* Phase 1E: dashboard card modernization */
+.dashboard-grid {
+  gap: 20px;
+}
+
+.card {
+  padding: 22px;
+  border-radius: 18px;
+  background: #ffffff;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.10);
+}
+
+.card h2 {
+  margin-bottom: 10px;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.card p {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f172a;
+}
