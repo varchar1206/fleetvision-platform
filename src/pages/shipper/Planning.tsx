@@ -426,6 +426,7 @@ export default function Planning() {
                       dispatchTime={load.dispatchWindow}
                       travelTime={load.plannedTravelTime}
                       commitmentTime={load.commitmentTime}
+                      etaStartTime={load.etaStartTime}
                     />
                   </td>
                   <td>{load.tripId}</td>

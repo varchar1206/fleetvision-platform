@@ -42,6 +42,7 @@ export default function DailyActivityGrid({ loads }: Props) {
                   dispatchTime={load.dispatchWindow}
                   travelTime={load.plannedTravelTime}
                   commitmentTime={load.commitmentTime}
+                  etaStartTime={load.etaStartTime}
                 />
               </td>
             </tr>

@@ -10,7 +10,8 @@ export function getEtaStatusCounts(loads: any[]) {
       load.dispatchDate,
       load.dispatchWindow,
       load.plannedTravelTime,
-      load.commitmentTime
+      load.commitmentTime,
+      load.etaStartTime
     );
 
     if (eta.etaStatus === "ON_TIME") onTime++;

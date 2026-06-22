@@ -5,6 +5,7 @@ type Props = {
   dispatchTime?: string | null;
   travelTime?: string | null;
   commitmentTime?: string | null;
+  etaStartTime?: string | null;
 };
 
 export default function PlanningEtaCell({
@@ -12,12 +13,14 @@ export default function PlanningEtaCell({
   dispatchTime,
   travelTime,
   commitmentTime,
+  etaStartTime,
 }: Props) {
   const eta = buildEtaSummary(
     dispatchDate,
     dispatchTime,
     travelTime,
-    commitmentTime
+    commitmentTime,
+    etaStartTime
   );
 
   return (
