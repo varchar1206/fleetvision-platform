@@ -4,9 +4,11 @@ type LocationRecord = Schema["Location"]["type"];
 
 type Props = {
   locations: LocationRecord[];
+  onEdit: (location: LocationRecord) => void;
+  onDelete: (location: LocationRecord) => void;
 };
 
-export default function LocationGrid({ locations }: Props) {
+export default function LocationGrid({ locations, onEdit, onDelete }: Props) {
   return (
     <div className="table-card">
       <h2>Location Master</h2>
@@ -22,6 +24,8 @@ export default function LocationGrid({ locations }: Props) {
             <th>Commitment</th>
             <th>Travel Time</th>
             <th>GPS</th>
+            <th>Edit</th>
+            <th>Delete</th>
           </tr>
         </thead>
 
@@ -36,6 +40,8 @@ export default function LocationGrid({ locations }: Props) {
               <td>{location.commitmentTime}</td>
               <td>{location.oneWayTravelTime}</td>
               <td>{location.latitude && location.longitude ? "Yes" : "Missing"}</td>
+              <td><button onClick={() => onEdit(location)}>Edit</button></td>
+              <td><button onClick={() => onDelete(location)}>Delete</button></td>
             </tr>
           ))}
         </tbody>
