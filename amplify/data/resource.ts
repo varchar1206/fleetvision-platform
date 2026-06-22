@@ -4,6 +4,9 @@ const schema = a.schema({
   Load: a
     .model({
       storeNumber: a.string().required(),
+      storeName: a.string(),
+      commitmentTime: a.string(),
+      plannedTravelTime: a.string(),
       dispatchDate: a.string().required(),
       dispatchWindow: a.string().required(),
       activityType: a.string().required(),
