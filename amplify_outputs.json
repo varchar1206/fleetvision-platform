@@ -54,6 +54,27 @@
               "isRequired": true,
               "attributes": []
             },
+            "storeName": {
+              "name": "storeName",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "commitmentTime": {
+              "name": "commitmentTime",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "plannedTravelTime": {
+              "name": "plannedTravelTime",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
             "dispatchDate": {
               "name": "dispatchDate",
               "isArray": false,
