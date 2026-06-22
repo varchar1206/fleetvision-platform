@@ -416,6 +416,9 @@ export default function Planning() {
                   </td>
                   <td>{load.dispatchDate}</td>
                   <td>{load.storeNumber}</td>
+                  <td>{load.storeName}</td>
+                  <td>{load.commitmentTime}</td>
+                  <td>{load.plannedTravelTime}</td>
                   <td>{load.tripId}</td>
                   <td>{load.activityType}</td>
                   <td>{load.equipmentType}</td>
