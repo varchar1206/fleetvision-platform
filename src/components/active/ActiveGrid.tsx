@@ -1,4 +1,5 @@
 import type { Schema } from "../../../amplify/data/resource";
+import PlanningEtaCell from "../planning/PlanningEtaCell";
 
 type LoadRecord = Schema["Load"]["type"];
 
@@ -22,6 +23,7 @@ export default function ActiveGrid({ loads }: Props) {
             <th>Broker</th>
             <th>Rate</th>
             <th>Status</th>
+            <th>ETA</th>
           </tr>
         </thead>
 
@@ -36,6 +38,14 @@ export default function ActiveGrid({ loads }: Props) {
               <td>{load.brokerName}</td>
               <td>{load.rate ? `$${load.rate.toFixed(2)}` : ""}</td>
               <td>{load.status}</td>
+              <td>
+                <PlanningEtaCell
+                  dispatchDate={load.dispatchDate}
+                  dispatchTime={load.dispatchWindow}
+                  travelTime={load.plannedTravelTime}
+                  commitmentTime={load.commitmentTime}
+                />
+              </td>
             </tr>
           ))}
         </tbody>
