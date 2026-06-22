@@ -29,6 +29,10 @@ export default function Planning() {
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [dateFilter, setDateFilter] = useState("");
 
+  const selectedLocation = locations.find(
+    (location) => location.storeNumber === storeNumber
+  );
+
   async function loadPlanningRecords() {
     setIsLoading(true);
     const result = await client.models.Load.list();
@@ -248,6 +252,17 @@ export default function Planning() {
               </option>
             ))}
           </select>
+
+          {selectedLocation && (
+            <div className="table-card">
+              <h2>Selected Store</h2>
+              <p>{selectedLocation.locationName}</p>
+              <p>{selectedLocation.streetAddress}, {selectedLocation.city}, {selectedLocation.state}</p>
+              <p>Commitment: {selectedLocation.commitmentTime || "Not set"}</p>
+              <p>Travel Time: {selectedLocation.oneWayTravelTime || "Not set"}</p>
+            </div>
+          )}
+
           <input type="date" value={dispatchDate} onChange={(e) => setDispatchDate(e.target.value)} />
 
           <select value={dispatchTime} onChange={(e) => setDispatchTime(e.target.value)}>
