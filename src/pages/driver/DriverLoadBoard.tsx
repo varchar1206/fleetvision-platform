@@ -5,6 +5,7 @@ import type { Schema } from "../../../amplify/data/resource";
 import DriverActions from "../../components/driver/DriverActions";
 import DriverLoadBoardComponent from "../../components/driver/DriverLoadBoard";
 import DriverMetrics from "../../components/driver/DriverMetrics";
+import { getEtaStartUpdate } from "../../utils/eta/getEtaStartUpdate";
 
 const client = generateClient<Schema>();
 
@@ -60,6 +61,7 @@ export default function DriverLoadBoard() {
         id: selectedLoadId,
         status,
         notes: note,
+        ...getEtaStartUpdate(status, now),
       }),
 
       client.models.DriverLocation.create({
