@@ -283,3 +283,32 @@ td {
     overflow-x: auto;
   }
 }
+
+/* Phase 1D: form and button polish */
+input,
+select,
+button {
+  font: inherit;
+}
+
+input,
+select {
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 11px 12px;
+  background: #ffffff;
+  color: #0f172a;
+}
+
+button {
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.12);
+}
+
+button:active {
+  transform: translateY(0);
+}
