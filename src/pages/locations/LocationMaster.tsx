@@ -5,6 +5,7 @@ import type { Schema } from "../../../amplify/data/resource";
 import LocationForm from "../../components/locations/LocationForm";
 import LocationGrid from "../../components/locations/LocationGrid";
 import LocationMetrics from "../../components/locations/LocationMetrics";
+import LocationImportTools from "../../components/locations/LocationImportTools";
 
 const client = generateClient<Schema>();
 
@@ -104,6 +105,8 @@ export default function LocationMaster() {
         onSave={saveLocation}
         onCancel={() => setForm(emptyForm)}
       />
+
+      <LocationImportTools onImportComplete={loadLocations} />
 
       {isLoading ? (
         <div className="table-card">
