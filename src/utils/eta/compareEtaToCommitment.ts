@@ -12,7 +12,11 @@ export function compareEtaToCommitment(
     return "UNKNOWN";
   }
 
-  if (eta <= commitment) return "ON_TIME";
+  const minutesUntilCommitment =
+    (commitment.getTime() - eta.getTime()) / 60000;
 
-  return "LATE";
+  if (eta > commitment) return "LATE";
+  if (minutesUntilCommitment <= 30) return "AT_RISK";
+
+  return "ON_TIME";
 }
