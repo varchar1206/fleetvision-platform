@@ -5,6 +5,7 @@ import type { Schema } from "../../../amplify/data/resource";
 import ActiveFilters from "../../components/active/ActiveFilters";
 import ActiveGrid from "../../components/active/ActiveGrid";
 import ActiveMetrics from "../../components/active/ActiveMetrics";
+import { buildEtaSummary } from "../../utils/eta/buildEtaSummary";
 
 const client = generateClient<Schema>();
 
@@ -15,6 +16,7 @@ export default function ActiveLoads() {
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [dateFilter, setDateFilter] = useState("");
+  const [etaFilter, setEtaFilter] = useState("ALL");
 
   async function loadActiveLoads() {
     setIsLoading(true);
@@ -39,7 +41,17 @@ export default function ActiveLoads() {
 
     const matchesDate = !dateFilter || load.dispatchDate === dateFilter;
 
-    return matchesSearch && matchesDate;
+    const eta = buildEtaSummary(
+      load.dispatchDate,
+      load.dispatchWindow,
+      load.plannedTravelTime,
+      load.commitmentTime,
+      load.etaStartTime
+    );
+
+    const matchesEta = etaFilter === "ALL" || eta.etaStatus === etaFilter;
+
+    return matchesSearch && matchesDate && matchesEta;
   });
 
   return (
@@ -61,8 +73,22 @@ export default function ActiveLoads() {
         onClear={() => {
           setSearchTerm("");
           setDateFilter("");
+          setEtaFilter("ALL");
         }}
       />
+
+      <div className="table-card">
+        <h2>ETA Filter</h2>
+        <div className="action-row">
+          <select value={etaFilter} onChange={(e) => setEtaFilter(e.target.value)}>
+            <option value="ALL">All ETA Statuses</option>
+            <option value="ON_TIME">On Time</option>
+            <option value="AT_RISK">At Risk</option>
+            <option value="LATE">Late</option>
+            <option value="UNKNOWN">Unknown</option>
+          </select>
+        </div>
+      </div>
 
       {isLoading ? (
         <div className="table-card">
