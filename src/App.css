@@ -167,3 +167,42 @@ body,
   background: #e5e7eb;
   color: #374151;
 }
+
+/* Phase 1A: modern visual foundation */
+.app-shell {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.top-bar,
+.table-card,
+.card {
+  border: 1px solid #e5e7eb;
+}
+
+.top-bar {
+  background: #ffffff;
+  padding: 22px 24px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.nav-tabs a {
+  background: #ffffff;
+  color: #0f172a;
+  padding: 12px 16px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  border: 1px solid #e5e7eb;
+}
+
+.nav-tabs a.active {
+  background: #1e40af;
+  color: #ffffff;
+}
+
+.card,
+.table-card {
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
