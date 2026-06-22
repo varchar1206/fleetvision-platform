@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import BulkLoadTools from "../../components/planning/BulkLoadTools";
 import PlanningTimeUpdateTools from "../../components/planning/PlanningTimeUpdateTools";
 import PlanningEtaCell from "../../components/planning/PlanningEtaCell";
+import { buildEtaSummary } from "../../utils/eta/buildEtaSummary";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../../../amplify/data/resource";
 
@@ -30,6 +31,7 @@ export default function Planning() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [dateFilter, setDateFilter] = useState("");
+  const [etaFilter, setEtaFilter] = useState("ALL");
   const [timeUpdateDispatch, setTimeUpdateDispatch] = useState("");
   const [timeUpdateCommitment, setTimeUpdateCommitment] = useState("");
   const [timeUpdateTravel, setTimeUpdateTravel] = useState("");
@@ -256,7 +258,17 @@ export default function Planning() {
     const matchesDate =
       !dateFilter || load.dispatchDate === dateFilter;
 
-    return matchesSearch && matchesStatus && matchesDate;
+    const eta = buildEtaSummary(
+      load.dispatchDate,
+      load.dispatchWindow,
+      load.plannedTravelTime,
+      load.commitmentTime,
+      load.etaStartTime
+    );
+
+    const matchesEta = etaFilter === "ALL" || eta.etaStatus === etaFilter;
+
+    return matchesSearch && matchesStatus && matchesDate && matchesEta;
   });
 
   const totalPlannedCost = filteredLoads.reduce((sum, load) => sum + (load.rate || 0), 0);
@@ -366,7 +378,15 @@ export default function Planning() {
 
           <input type="date" value={dateFilter} onChange={(e) => setDateFilter(e.target.value)} />
 
-          <button onClick={() => { setSearchTerm(""); setStatusFilter("ALL"); setDateFilter(""); }}>
+          <select value={etaFilter} onChange={(e) => setEtaFilter(e.target.value)}>
+            <option value="ALL">All ETA Statuses</option>
+            <option value="ON_TIME">On Time</option>
+            <option value="AT_RISK">At Risk</option>
+            <option value="LATE">Late</option>
+            <option value="UNKNOWN">Unknown</option>
+          </select>
+
+          <button onClick={() => { setSearchTerm(""); setStatusFilter("ALL"); setDateFilter(""); setEtaFilter("ALL"); }}>
             Clear Filters
           </button>
         </div>
