@@ -3,14 +3,20 @@ import { parseTravelTimeToMinutes } from "./parseTravelTime";
 export function calculateEta(
   dispatchDate: string | null | undefined,
   dispatchTime: string | null | undefined,
-  travelTime: string | null | undefined
+  travelTime: string | null | undefined,
+  etaStartTime?: string | null
 ) {
-  if (!dispatchDate || !dispatchTime) return "";
-
   const travelMinutes = parseTravelTimeToMinutes(travelTime);
-  const eta = new Date(`${dispatchDate}T${dispatchTime}:00`);
 
-  eta.setMinutes(eta.getMinutes() + travelMinutes);
+  const start = etaStartTime
+    ? new Date(etaStartTime)
+    : dispatchDate && dispatchTime
+      ? new Date(`${dispatchDate}T${dispatchTime}:00`)
+      : null;
 
-  return eta.toISOString();
+  if (!start || Number.isNaN(start.getTime())) return "";
+
+  start.setMinutes(start.getMinutes() + travelMinutes);
+
+  return start.toISOString();
 }

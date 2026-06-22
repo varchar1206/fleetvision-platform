@@ -5,9 +5,16 @@ export function buildEtaSummary(
   dispatchDate: string | null | undefined,
   dispatchTime: string | null | undefined,
   travelTime: string | null | undefined,
-  commitmentTime: string | null | undefined
+  commitmentTime: string | null | undefined,
+  etaStartTime?: string | null
 ) {
-  const estimatedArrivalTime = calculateEta(dispatchDate, dispatchTime, travelTime);
+  const estimatedArrivalTime = calculateEta(
+    dispatchDate,
+    dispatchTime,
+    travelTime,
+    etaStartTime
+  );
+
   const etaStatus = compareEtaToCommitment(
     estimatedArrivalTime,
     dispatchDate,
