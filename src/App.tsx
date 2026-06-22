@@ -17,6 +17,7 @@ import LoadEventHistory from "./pages/events/LoadEventHistory";
 import LocationTracking from "./pages/gps/LocationTracking";
 import LocationMaster from "./pages/locations/LocationMaster";
 import DeveloperPortal from "./pages/developer/DeveloperPortal";
+import MobilePortal from "./pages/mobile/MobilePortal";
 
 import BrokerDashboard from "./pages/broker/BrokerDashboard";
 import BrokerTenderQueue from "./pages/broker/BrokerTenderQueue";
@@ -31,6 +32,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/developer" element={<DeveloperPortal />} />
+        <Route path="/mobile" element={<MobilePortal />} />
 
         <Route path="/" element={<ShipperLayout />}>
           <Route index element={<ShipperDashboard />} />

@@ -343,3 +343,36 @@ button:active {
   font-weight: 700;
   color: #0f172a;
 }
+
+.mobile-shell {
+  min-height: 100vh;
+  padding: 18px;
+  background: #f4f7fb;
+  color: #0f172a;
+}
+
+.mobile-shell h1 {
+  margin: 0 0 6px;
+  font-size: 28px;
+}
+
+.mobile-shell p {
+  margin: 0 0 18px;
+  color: #64748b;
+}
+
+.mobile-link-list {
+  display: grid;
+  gap: 12px;
+}
+
+.mobile-link-card {
+  display: block;
+  background: #ffffff;
+  color: #0f172a;
+  padding: 18px;
+  border-radius: 16px;
+  text-decoration: none;
+  font-weight: 800;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.10);
+}
