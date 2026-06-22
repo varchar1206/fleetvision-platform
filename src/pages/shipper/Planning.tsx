@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import BulkLoadTools from "../../components/planning/BulkLoadTools";
+import PlanningTimeUpdateTools from "../../components/planning/PlanningTimeUpdateTools";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../../../amplify/data/resource";
 
@@ -28,6 +29,9 @@ export default function Planning() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [dateFilter, setDateFilter] = useState("");
+  const [timeUpdateDispatch, setTimeUpdateDispatch] = useState("");
+  const [timeUpdateCommitment, setTimeUpdateCommitment] = useState("");
+  const [timeUpdateTravel, setTimeUpdateTravel] = useState("");
 
   const selectedLocation = locations.find(
     (location) => location.storeNumber === storeNumber
@@ -189,6 +193,28 @@ export default function Planning() {
     await loadPlanningRecords();
   }
 
+  async function applySelectedTimeUpdates() {
+    const selectedLoads = loads.filter((load) => selectedLoadIds.includes(load.id));
+
+    if (selectedLoads.length === 0) {
+      alert("Select at least one load first.");
+      return;
+    }
+
+    await Promise.all(
+      selectedLoads.map((load) =>
+        client.models.Load.update({
+          id: load.id,
+          ...(timeUpdateDispatch ? { dispatchWindow: timeUpdateDispatch, tripId: timeUpdateDispatch } : {}),
+          ...(timeUpdateCommitment ? { commitmentTime: timeUpdateCommitment } : {}),
+          ...(timeUpdateTravel ? { plannedTravelTime: timeUpdateTravel } : {}),
+        })
+      )
+    );
+
+    await loadPlanningRecords();
+  }
+
   async function sendSelectedToTenderQueue() {
     const selectedLoads = loads.filter((load) => selectedLoadIds.includes(load.id));
 
@@ -308,7 +334,18 @@ export default function Planning() {
           <p>${totalPlannedCost.toFixed(2)}</p>
         </div>
       </div>
-      <BulkLoadTools onLoadsCreated={loadPlanningRecords} />   
+      <BulkLoadTools onLoadsCreated={loadPlanningRecords} />
+
+      <PlanningTimeUpdateTools
+        selectedCount={selectedLoadIds.length}
+        dispatchTime={timeUpdateDispatch}
+        commitmentTime={timeUpdateCommitment}
+        travelTime={timeUpdateTravel}
+        onDispatchTimeChange={setTimeUpdateDispatch}
+        onCommitmentTimeChange={setTimeUpdateCommitment}
+        onTravelTimeChange={setTimeUpdateTravel}
+        onApply={applySelectedTimeUpdates}
+      />   
       <div className="table-card">
         <h2>Search & Filters</h2>
         <div className="action-row">
