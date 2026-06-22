@@ -1,4 +1,5 @@
 import type { Schema } from "../../../amplify/data/resource";
+import { getEtaStatusCounts } from "../../utils/eta/getEtaStatusCounts";
 
 type LoadRecord = Schema["Load"]["type"];
 type ExceptionRecord = Schema["LoadException"]["type"];
@@ -15,6 +16,7 @@ export default function DailyMetrics({ loads, exceptions }: Props) {
   ).length;
   const delivered = loads.filter((load) => load.status === "DELIVERED").length;
   const totalCost = loads.reduce((sum, load) => sum + (load.rate || 0), 0);
+  const etaCounts = getEtaStatusCounts(loads);
 
   return (
     <div className="dashboard-grid">
@@ -24,6 +26,9 @@ export default function DailyMetrics({ loads, exceptions }: Props) {
       <div className="card"><h2>Delivered</h2><p>{delivered}</p></div>
       <div className="card"><h2>Exceptions</h2><p>{exceptions.length}</p></div>
       <div className="card"><h2>Today's Cost</h2><p>${totalCost.toFixed(2)}</p></div>
+      <div className="card"><h2>On Time ETA</h2><p>{etaCounts.onTime}</p></div>
+      <div className="card"><h2>At Risk ETA</h2><p>{etaCounts.atRisk}</p></div>
+      <div className="card"><h2>Late ETA</h2><p>{etaCounts.late}</p></div>
     </div>
   );
 }
