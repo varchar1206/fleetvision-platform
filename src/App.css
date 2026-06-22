@@ -139,3 +139,31 @@ body,
 .app-shell {
   padding-top: 48px;
 }
+
+.eta-badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.eta-on-time {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.eta-at-risk {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+.eta-late {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.eta-unknown {
+  background: #e5e7eb;
+  color: #374151;
+}

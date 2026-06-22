@@ -8,6 +8,13 @@ type Props = {
   etaStartTime?: string | null;
 };
 
+function getEtaClass(status: string) {
+  if (status === "ON_TIME") return "eta-on-time";
+  if (status === "AT_RISK") return "eta-at-risk";
+  if (status === "LATE") return "eta-late";
+  return "eta-unknown";
+}
+
 export default function PlanningEtaCell({
   dispatchDate,
   dispatchTime,
@@ -24,7 +31,7 @@ export default function PlanningEtaCell({
   );
 
   return (
-    <span>
+    <span className={`eta-badge ${getEtaClass(eta.etaStatus)}`}>
       {eta.estimatedArrivalTime
         ? new Date(eta.estimatedArrivalTime).toLocaleTimeString([], {
             hour: "2-digit",
