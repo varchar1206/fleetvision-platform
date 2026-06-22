@@ -6,6 +6,7 @@ import type { Schema } from "../../../amplify/data/resource";
 const client = generateClient<Schema>();
 
 type LoadRecord = Schema["Load"]["type"];
+type LocationRecord = Schema["Location"]["type"];
 
 const dispatchTimes = Array.from({ length: 24 }, (_, hour) =>
   `${String(hour).padStart(2, "0")}:00`
@@ -13,6 +14,7 @@ const dispatchTimes = Array.from({ length: 24 }, (_, hour) =>
 
 export default function Planning() {
   const [loads, setLoads] = useState<LoadRecord[]>([]);
+  const [locations, setLocations] = useState<LocationRecord[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedLoadIds, setSelectedLoadIds] = useState<string[]>([]);
 
@@ -32,6 +34,11 @@ export default function Planning() {
     const result = await client.models.Load.list();
     setLoads(result.data);
     setIsLoading(false);
+  }
+
+  async function loadLocationRecords() {
+    const result = await client.models.Location.list();
+    setLocations(result.data);
   }
 
   function toggleSelected(loadId: string) {
@@ -198,6 +205,7 @@ export default function Planning() {
 
   useEffect(() => {
     loadPlanningRecords();
+    loadLocationRecords();
   }, []);
 
   const filteredLoads = loads.filter((load) => {
@@ -232,7 +240,14 @@ export default function Planning() {
         <h2>Create Load Entry</h2>
 
         <div className="action-row">
-          <input placeholder="Store Number" value={storeNumber} onChange={(e) => setStoreNumber(e.target.value)} />
+          <select value={storeNumber} onChange={(e) => setStoreNumber(e.target.value)}>
+            <option value="">Select Store</option>
+            {locations.map((location) => (
+              <option key={location.id} value={location.storeNumber}>
+                {location.storeNumber} - {location.locationName}
+              </option>
+            ))}
+          </select>
           <input type="date" value={dispatchDate} onChange={(e) => setDispatchDate(e.target.value)} />
 
           <select value={dispatchTime} onChange={(e) => setDispatchTime(e.target.value)}>
