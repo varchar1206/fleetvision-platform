@@ -70,6 +70,9 @@ export default function Planning() {
 
     await client.models.Load.create({
       storeNumber,
+      storeName: selectedLocation?.locationName || "",
+      commitmentTime: selectedLocation?.commitmentTime || "",
+      plannedTravelTime: selectedLocation?.oneWayTravelTime || "",
       dispatchDate,
       dispatchWindow: dispatchTime,
       activityType,
