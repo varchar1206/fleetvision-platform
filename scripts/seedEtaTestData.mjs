@@ -8,6 +8,11 @@ Amplify.configure(outputs);
 const client = generateClient();
 
 const today = new Date().toISOString().slice(0, 10);
+const existing = await client.models.Load.list();
+
+for (const load of existing.data.filter((item) => item.createdBy === "SEED")) {
+  await client.models.Load.delete({ id: load.id });
+}
 
 const testLoads = [
   { storeNumber: "ETA001", storeName: "ETA On Time 1", dispatchWindow: "06:00", plannedTravelTime: "3h", commitmentTime: "10:00" },
@@ -17,8 +22,6 @@ const testLoads = [
   { storeNumber: "ETA005", storeName: "ETA Late 1", dispatchWindow: "10:00", plannedTravelTime: "2h", commitmentTime: "11:00" },
   { storeNumber: "ETA006", storeName: "ETA Late 2", dispatchWindow: "11:00", plannedTravelTime: "2h", commitmentTime: "12:00" },
 ];
-
-let created = 0;
 
 for (const load of testLoads) {
   await client.models.Load.create({
@@ -35,8 +38,6 @@ for (const load of testLoads) {
     createdBy: "SEED",
     notes: "ETA test seed load.",
   });
-
-  created += 1;
 }
 
-console.log(`Created ${created} ETA test loads for ${today}.`);
+console.log(`Reset and created ${testLoads.length} ETA test loads for ${today}.`);
