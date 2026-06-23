@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 const links = [
-  { path: "/", label: "Shipper / Dispatch" },
+  { path: "/", label: "Dispatch" },
   { path: "/planning", label: "Planning" },
   { path: "/active-loads", label: "Active Loads" },
   { path: "/broker", label: "Broker" },
@@ -11,6 +11,7 @@ const links = [
   { path: "/events", label: "Events" },
   { path: "/gps", label: "GPS" },
   { path: "/locations", label: "Locations" },
+  { path: "/mobile", label: "Mobile Portal" },
 ];
 
 export default function DeveloperPortal() {
@@ -24,11 +25,10 @@ export default function DeveloperPortal() {
         <div className="role-badge">Developer View</div>
       </header>
 
-      <div className="dashboard-grid">
+      <div className="developer-grid">
         {links.map((link) => (
-          <Link className="card" key={link.path} to={link.path}>
-            <h2>{link.label}</h2>
-            <p>Open {link.label}</p>
+          <Link className="developer-card" key={link.path} to={link.path}>
+            {link.label}
           </Link>
         ))}
       </div>

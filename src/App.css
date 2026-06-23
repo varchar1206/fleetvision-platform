@@ -376,3 +376,20 @@ button:active {
   font-weight: 800;
   box-shadow: 0 4px 14px rgba(15, 23, 42, 0.10);
 }
+
+.developer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.developer-card {
+  background: #ffffff;
+  color: #0f172a;
+  padding: 22px;
+  border-radius: 14px;
+  text-decoration: none;
+  font-weight: 800;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
