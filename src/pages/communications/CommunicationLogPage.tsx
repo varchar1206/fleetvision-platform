@@ -24,6 +24,13 @@ export default function CommunicationLogPage() {
     loadMessages();
   }, []);
 
+  const totalMessages = messages.length;
+  const smsCount = messages.filter((message) => message.channel === "SMS").length;
+  const emailCount = messages.filter((message) => message.channel === "EMAIL").length;
+  const inboundCount = messages.filter((message) => message.direction === "INBOUND").length;
+  const outboundCount = messages.filter((message) => message.direction === "OUTBOUND").length;
+  const pendingCount = messages.filter((message) => message.status === "PENDING").length;
+
   const filteredMessages = messages.filter((message) => {
     const matchesChannel =
       channelFilter === "ALL" || message.channel === channelFilter;
@@ -44,6 +51,15 @@ export default function CommunicationLogPage() {
           <h2>Communication Log</h2>
           <p>Outbound and inbound SMS/email records associated with loads.</p>
         </div>
+      </div>
+
+      <div className="dashboard-grid">
+        <div className="card"><h2>Total Messages</h2><p>{totalMessages}</p></div>
+        <div className="card"><h2>SMS</h2><p>{smsCount}</p></div>
+        <div className="card"><h2>Email</h2><p>{emailCount}</p></div>
+        <div className="card"><h2>Inbound</h2><p>{inboundCount}</p></div>
+        <div className="card"><h2>Outbound</h2><p>{outboundCount}</p></div>
+        <div className="card"><h2>Pending</h2><p>{pendingCount}</p></div>
       </div>
 
       <div className="table-card">
