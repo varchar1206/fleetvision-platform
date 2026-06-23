@@ -115,3 +115,13 @@
     font-size: var(--fv-font-md);
   }
 }
+
+.v2-nav-group a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.v2-nav-group svg {
+  flex-shrink: 0;
+}
