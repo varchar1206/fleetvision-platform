@@ -11,7 +11,7 @@ export const navigationGroups = [
     title: "Dispatch",
     links: [
       { label: "Daily Dashboard", path: "/", icon: "Activity" },
-      { label: "Planning", path: "/planning", icon: "CalendarDays" },
+      { label: "Planning", path: "/v2/planning", icon: "CalendarDays" },
       { label: "Tender Queue", path: "/tender-queue", icon: "ClipboardList" },
       { label: "Active Loads", path: "/active-loads", icon: "Truck" },
       { label: "Completed Loads", path: "/completed-loads", icon: "CheckCircle2" },

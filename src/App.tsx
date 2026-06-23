@@ -38,6 +38,7 @@ function App() {
         <Route path="/v2" element={<AppShellV2 />}>
           <Route index element={<V2Home />} />
           <Route path="developer" element={<V2DeveloperPortal />} />
+          <Route path="planning" element={<Planning />} />
         </Route>
         <Route path="/mobile" element={<MobilePortal />} />
 
