@@ -16,7 +16,7 @@ const links = [
 
 export default function DeveloperPortal() {
   return (
-    <main className="app-shell">
+    <main className="app-shell developer-shell">
       <header className="top-bar">
         <div>
           <h1>FleetVision Developer Portal</h1>
