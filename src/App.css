@@ -399,3 +399,46 @@ button:active {
   width: min(1200px, calc(100vw - 48px));
   max-width: none;
 }
+
+.v2-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.v2-sidebar {
+  width: 240px;
+  background: #0f172a;
+  color: white;
+  padding: 24px;
+}
+
+.v2-sidebar h2 {
+  margin-bottom: 24px;
+}
+
+.v2-sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.v2-sidebar a {
+  color: white;
+  text-decoration: none;
+}
+
+.v2-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.v2-header {
+  background: white;
+  padding: 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.v2-content {
+  padding: 24px;
+}

@@ -17,6 +17,8 @@ import LoadEventHistory from "./pages/events/LoadEventHistory";
 import LocationTracking from "./pages/gps/LocationTracking";
 import LocationMaster from "./pages/locations/LocationMaster";
 import DeveloperPortal from "./pages/developer/DeveloperPortal";
+import AppShellV2 from "./layouts/v2/AppShellV2";
+import V2Home from "./pages/v2/V2Home";
 import MobilePortal from "./pages/mobile/MobilePortal";
 
 import BrokerDashboard from "./pages/broker/BrokerDashboard";
@@ -32,6 +34,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/developer" element={<DeveloperPortal />} />
+        <Route path="/v2" element={<AppShellV2 />}>
+          <Route index element={<V2Home />} />
+        </Route>
         <Route path="/mobile" element={<MobilePortal />} />
 
         <Route path="/" element={<ShipperLayout />}>
