@@ -141,3 +141,19 @@
   text-transform: uppercase;
   cursor: pointer;
 }
+
+.v2-sidebar {
+  box-shadow: var(--fv-shadow-large);
+}
+
+.v2-nav-group a {
+  transition: background var(--fv-transition-fast), transform var(--fv-transition-fast);
+}
+
+.v2-nav-group a:hover {
+  transform: translateX(3px);
+}
+
+.v2-nav-group-toggle:hover {
+  color: white;
+}
