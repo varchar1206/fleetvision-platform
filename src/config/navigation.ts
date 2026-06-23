@@ -1,16 +1,16 @@
 export const navigationGroups = [
   {
-    title: "Main",
+    title: "Workspace",
     links: [
-      { label: "Dashboard", path: "/v2" },
+      { label: "V2 Dashboard", path: "/v2" },
       { label: "Developer Portal", path: "/developer" },
       { label: "Mobile Portal", path: "/mobile" },
     ],
   },
   {
-    title: "Shipper",
+    title: "Dispatch",
     links: [
-      { label: "Overview", path: "/" },
+      { label: "Daily Dashboard", path: "/" },
       { label: "Planning", path: "/planning" },
       { label: "Tender Queue", path: "/tender-queue" },
       { label: "Active Loads", path: "/active-loads" },
@@ -20,20 +20,20 @@ export const navigationGroups = [
     ],
   },
   {
-    title: "Operations",
+    title: "Partner Portals",
     links: [
-      { label: "Broker", path: "/broker" },
-      { label: "Carrier", path: "/carrier" },
-      { label: "Driver", path: "/driver" },
+      { label: "Broker Portal", path: "/broker" },
+      { label: "Carrier Portal", path: "/carrier" },
+      { label: "Driver Portal", path: "/driver" },
     ],
   },
   {
-    title: "System",
+    title: "Visibility",
     links: [
       { label: "Notifications", path: "/notifications" },
-      { label: "Events", path: "/events" },
-      { label: "GPS", path: "/gps" },
-      { label: "Locations", path: "/locations" },
+      { label: "Event History", path: "/events" },
+      { label: "GPS Tracking", path: "/gps" },
+      { label: "Location Master", path: "/locations" },
     ],
   },
 ];
