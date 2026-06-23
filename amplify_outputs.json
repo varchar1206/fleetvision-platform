@@ -75,6 +75,34 @@
               "isRequired": false,
               "attributes": []
             },
+            "etaStartTime": {
+              "name": "etaStartTime",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "etaStartSource": {
+              "name": "etaStartSource",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "estimatedArrivalTime": {
+              "name": "estimatedArrivalTime",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "etaStatus": {
+              "name": "etaStatus",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
             "dispatchDate": {
               "name": "dispatchDate",
               "isArray": false,
