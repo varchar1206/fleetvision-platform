@@ -1,0 +1,72 @@
+:root {
+  /* Colors */
+  --fv-color-bg: #f4f7fb;
+  --fv-color-surface: #ffffff;
+  --fv-color-sidebar: #0f172a;
+  --fv-color-primary: #2563eb;
+  --fv-color-primary-dark: #1e40af;
+  --fv-color-text: #0f172a;
+  --fv-color-muted: #64748b;
+  --fv-color-border: #e5e7eb;
+
+  /* Status Colors */
+  --fv-color-success-bg: #dcfce7;
+  --fv-color-success-text: #166534;
+  --fv-color-warning-bg: #fef9c3;
+  --fv-color-warning-text: #854d0e;
+  --fv-color-danger-bg: #fee2e2;
+  --fv-color-danger-text: #991b1b;
+  --fv-color-neutral-bg: #e5e7eb;
+  --fv-color-neutral-text: #374151;
+
+  /* Typography */
+  --fv-font-family: Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  --fv-font-xs: 12px;
+  --fv-font-sm: 14px;
+  --fv-font-md: 16px;
+  --fv-font-lg: 20px;
+  --fv-font-xl: 28px;
+  --fv-font-xxl: 36px;
+
+  /* Spacing */
+  --fv-space-xs: 4px;
+  --fv-space-sm: 8px;
+  --fv-space-md: 16px;
+  --fv-space-lg: 24px;
+  --fv-space-xl: 32px;
+  --fv-space-xxl: 48px;
+
+  /* Radius */
+  --fv-radius-sm: 8px;
+  --fv-radius-md: 12px;
+  --fv-radius-lg: 18px;
+  --fv-radius-pill: 999px;
+
+  /* Shadows */
+  --fv-shadow-soft: 0 4px 12px rgba(15, 23, 42, 0.06);
+  --fv-shadow-medium: 0 8px 20px rgba(15, 23, 42, 0.08);
+  --fv-shadow-large: 0 12px 32px rgba(15, 23, 42, 0.10);
+
+  /* Layout */
+  --fv-sidebar-width: 240px;
+  --fv-sidebar-width-collapsed: 72px;
+  --fv-header-height: 64px;
+  --fv-content-max-width: 1600px;
+
+  /* Form Controls */
+  --fv-input-height: 42px;
+  --fv-button-height: 42px;
+
+  /* Tables */
+  --fv-table-row-height: 48px;
+
+  /* Motion */
+  --fv-transition-fast: 120ms ease;
+  --fv-transition-medium: 200ms ease;
+
+  /* Z Index */
+  --fv-z-header: 20;
+  --fv-z-sidebar: 30;
+  --fv-z-drawer: 40;
+  --fv-z-modal: 50;
+}
