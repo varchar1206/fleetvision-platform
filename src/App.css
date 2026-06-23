@@ -1,4 +1,5 @@
 @import "./styles/tokens.css";
+@import "./styles/buttons.css";
 .app-shell {
   min-height: 100vh;
   padding: 32px;

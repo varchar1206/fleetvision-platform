@@ -1,0 +1,38 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--fv-button-height);
+  padding: 0 var(--fv-space-md);
+  border-radius: var(--fv-radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: var(--fv-font-sm);
+  font-weight: 600;
+  transition: var(--fv-transition-fast);
+}
+
+.btn-primary {
+  background: var(--fv-color-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--fv-color-primary-dark);
+}
+
+.btn-secondary {
+  background: var(--fv-color-surface);
+  color: var(--fv-color-text);
+  border-color: var(--fv-color-border);
+}
+
+.btn-danger {
+  background: var(--fv-color-danger-text);
+  color: white;
+}
+
+.btn-success {
+  background: var(--fv-color-success-text);
+  color: white;
+}
