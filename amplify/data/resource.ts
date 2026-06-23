@@ -81,6 +81,25 @@ const schema = a.schema({
     })
     .authorization((allow) => [allow.publicApiKey()]),
 
+  CommunicationLog: a
+    .model({
+      loadId: a.string(),
+      direction: a.string().required(),
+      channel: a.string().required(),
+      recipientName: a.string(),
+      recipientContact: a.string(),
+      subject: a.string(),
+      message: a.string().required(),
+      status: a.string().required(),
+      provider: a.string(),
+      providerMessageId: a.string(),
+      relatedEventType: a.string(),
+      receivedAt: a.string(),
+      sentAt: a.string(),
+      createdAt: a.string().required(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
   LoadException: a
     .model({
       loadId: a.string().required(),
