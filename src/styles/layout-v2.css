@@ -125,3 +125,19 @@
 .v2-nav-group svg {
   flex-shrink: 0;
 }
+
+.v2-nav-group-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  color: #94a3b8;
+  border: none;
+  padding: 8px 0;
+  font-size: var(--fv-font-xs);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -17,6 +18,8 @@ import {
   History,
   MapPinned,
   Map,
+  ChevronDown,
+  ChevronRight,
 } from "lucide-react";
 
 import { navigationGroups } from "../../config/navigation";
@@ -47,6 +50,19 @@ const icons = {
 };
 
 export default function NavigationDrawer({ isOpen, onClose }: Props) {
+  const [openGroups, setOpenGroups] = useState<string[]>([
+    "Workspace",
+    "Dispatch",
+  ]);
+
+  function toggleGroup(title: string) {
+    setOpenGroups((current) =>
+      current.includes(title)
+        ? current.filter((item) => item !== title)
+        : [...current, title]
+    );
+  }
+
   return (
     <>
       <aside className={isOpen ? "v2-sidebar open" : "v2-sidebar"}>
@@ -57,27 +73,33 @@ export default function NavigationDrawer({ isOpen, onClose }: Props) {
           </button>
         </div>
 
-        {navigationGroups.map((group) => (
-          <nav key={group.title} className="v2-nav-group">
-            <p>{group.title}</p>
+        {navigationGroups.map((group) => {
+          const isGroupOpen = openGroups.includes(group.title);
 
-            {group.links.map((link) => {
-              const Icon =
-                icons[link.icon as keyof typeof icons];
+          return (
+            <nav key={group.title} className="v2-nav-group">
+              <button
+                className="v2-nav-group-toggle"
+                onClick={() => toggleGroup(group.title)}
+              >
+                <span>{group.title}</span>
+                {isGroupOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+              </button>
 
-              return (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  onClick={onClose}
-                >
-                  {Icon && <Icon size={18} />}
-                  <span>{link.label}</span>
-                </Link>
-              );
-            })}
-          </nav>
-        ))}
+              {isGroupOpen &&
+                group.links.map((link) => {
+                  const Icon = icons[link.icon as keyof typeof icons];
+
+                  return (
+                    <Link key={link.path} to={link.path} onClick={onClose}>
+                      {Icon && <Icon size={18} />}
+                      <span>{link.label}</span>
+                    </Link>
+                  );
+                })}
+            </nav>
+          );
+        })}
       </aside>
 
       {isOpen && (
