@@ -3,7 +3,7 @@ export const navigationGroups = [
     title: "Workspace",
     links: [
       { label: "V2 Dashboard", path: "/v2", icon: "LayoutDashboard" },
-      { label: "Developer Portal", path: "/developer", icon: "Code2" },
+      { label: "Developer Portal", path: "/v2/developer", icon: "Code2" },
       { label: "Mobile Portal", path: "/mobile", icon: "Smartphone" },
     ],
   },

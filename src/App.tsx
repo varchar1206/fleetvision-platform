@@ -19,6 +19,7 @@ import LocationMaster from "./pages/locations/LocationMaster";
 import DeveloperPortal from "./pages/developer/DeveloperPortal";
 import AppShellV2 from "./layouts/v2/AppShellV2";
 import V2Home from "./pages/v2/V2Home";
+import V2DeveloperPortal from "./pages/v2/V2DeveloperPortal";
 import MobilePortal from "./pages/mobile/MobilePortal";
 
 import BrokerDashboard from "./pages/broker/BrokerDashboard";
@@ -36,6 +37,7 @@ function App() {
         <Route path="/developer" element={<DeveloperPortal />} />
         <Route path="/v2" element={<AppShellV2 />}>
           <Route index element={<V2Home />} />
+          <Route path="developer" element={<V2DeveloperPortal />} />
         </Route>
         <Route path="/mobile" element={<MobilePortal />} />
 
