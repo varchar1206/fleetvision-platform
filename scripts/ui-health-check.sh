@@ -51,6 +51,25 @@ echo
 echo "[8] Navigation Components"
 ls src/components/navigation
 
+
+echo
+echo "[10] ETA Utilities"
+test -f src/utils/eta/buildEtaSummary.ts && echo "PASS: ETA summary helper found" || echo "FAIL: ETA summary helper missing"
+test -f src/utils/eta/compareEtaToCommitment.ts && echo "PASS: ETA comparison helper found" || echo "FAIL: ETA comparison helper missing"
+
+echo
+echo "[11] V2 Pages"
+test -f src/pages/v2/V2Home.tsx && echo "PASS: V2 home found" || echo "FAIL: V2 home missing"
+test -f src/pages/v2/V2DeveloperPortal.tsx && echo "PASS: V2 developer portal found" || echo "FAIL: V2 developer portal missing"
+
+echo
+echo "[12] Mobile Portal"
+test -f src/pages/mobile/MobilePortal.tsx && echo "PASS: Mobile portal found" || echo "FAIL: Mobile portal missing"
+
+echo
+echo "[13] Navigation Icons"
+grep -q "icon:" src/config/navigation.ts && echo "PASS: Navigation icons configured" || echo "FAIL: Navigation icons missing"
+
 echo
 echo "[9] Recent Commits"
 git log --oneline -5
