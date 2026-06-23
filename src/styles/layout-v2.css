@@ -1,0 +1,28 @@
+.v2-shell {
+  display: flex;
+  min-height: 100vh;
+  background: var(--fv-color-bg);
+}
+
+.v2-sidebar {
+  width: var(--fv-sidebar-width);
+  background: var(--fv-color-sidebar);
+  color: white;
+}
+
+.v2-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.v2-header {
+  height: var(--fv-header-height);
+  background: var(--fv-color-surface);
+  border-bottom: 1px solid var(--fv-color-border);
+}
+
+.v2-content {
+  flex: 1;
+  padding: var(--fv-space-lg);
+}
