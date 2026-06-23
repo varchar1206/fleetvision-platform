@@ -31,6 +31,7 @@ export const navigationGroups = [
     title: "Visibility",
     links: [
       { label: "Notifications", path: "/notifications", icon: "Bell" },
+      { label: "Communication Log", path: "/communications", icon: "MessageSquareText" },
       { label: "Event History", path: "/events", icon: "History" },
       { label: "GPS Tracking", path: "/gps", icon: "MapPinned" },
       { label: "Location Master", path: "/locations", icon: "Map" },
