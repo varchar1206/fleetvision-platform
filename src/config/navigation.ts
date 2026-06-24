@@ -30,8 +30,8 @@ export const navigationGroups = [
     title: "Partner Portals",
     links: [
       { label: "Broker Workspace", path: "/v2/broker", icon: "Handshake" },
-      { label: "Carrier Portal", path: "/carrier", icon: "Warehouse" },
-      { label: "Driver Portal", path: "/driver", icon: "UserRound" },
+      { label: "Carrier Workspace", path: "/v2/carrier", icon: "Warehouse" },
+      { label: "Driver Workspace", path: "/v2/driver", icon: "UserRound" },
     ],
   },
   {

@@ -13,4 +13,14 @@ export const workspaces = {
     title: "Developer Workspace",
     subtitle: "Monitoring, diagnostics, automation, and testing",
   },
+
+  carrier: {
+    title: "Carrier Workspace",
+    subtitle: "Carrier dispatch, load acceptance, driver assignment, and execution",
+  },
+
+  driver: {
+    title: "Driver Workspace",
+    subtitle: "Driver load execution, check calls, events, and messaging",
+  },
 };

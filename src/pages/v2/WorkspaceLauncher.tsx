@@ -22,12 +22,12 @@ export default function WorkspaceLauncher() {
     {
       title: "Carrier Workspace",
       description: "Carrier dispatch and driver management.",
-      route: "/carrier",
+      route: "/v2/carrier",
     },
     {
       title: "Driver Workspace",
       description: "Mobile driver experience and load execution.",
-      route: "/mobile",
+      route: "/v2/driver",
     },
   ];
 
