@@ -4,6 +4,11 @@ export default function BrokerWorkspaceHome() {
   const navigate = useNavigate();
 
   const cards = [
+    {
+      title: "Broker Dashboard",
+      route: "/v2/broker/dashboard",
+      description: "Monitor broker operations and KPIs.",
+    },
     { title: "Tender Queue", route: "/v2/broker/tenders", description: "Review and respond to tendered loads." },
     { title: "Carrier Assignments", route: "/v2/broker/carrier-assignments", description: "Assign carrier capacity to accepted loads." },
     { title: "Active Loads", route: "/v2/broker/active-loads", description: "Monitor broker-managed active freight." },

@@ -51,12 +51,6 @@ function App() {
         <Route path="/v2" element={<AppShellV2 />}>
           <Route index element={<V2Home />} />
           <Route path="workspaces" element={<WorkspaceLauncher />} />
-          <Route path="developer" element={<V2DeveloperPortal />} />
-          <Route path="communication-monitor" element={<CommunicationEngineMonitor />} />
-          <Route path="automation-center" element={<AutomationCenter />} />
-          <Route path="event-processor" element={<EventProcessorMonitor />} />
-          <Route path="geofence-simulator" element={<GeofenceSimulator />} />
-          <Route path="delivery-diagnostics" element={<DeliveryDiagnostics />} />
           <Route path="planning" element={<Planning />} />
           <Route path="communications" element={<CommunicationLogPage />} />
           <Route path="communication-actions" element={<CommunicationActionsPage />} />
@@ -66,6 +60,15 @@ function App() {
           <Route path="gps" element={<LocationTracking />} />
           <Route path="locations" element={<LocationMaster />} />
         </Route>
+        <Route path="/v2/developer" element={<WorkspaceShellV2 workspace="developer" />}>
+          <Route index element={<V2DeveloperPortal />} />
+          <Route path="communication-monitor" element={<CommunicationEngineMonitor />} />
+          <Route path="automation-center" element={<AutomationCenter />} />
+          <Route path="event-processor" element={<EventProcessorMonitor />} />
+          <Route path="geofence-simulator" element={<GeofenceSimulator />} />
+          <Route path="delivery-diagnostics" element={<DeliveryDiagnostics />} />
+        </Route>
+
         <Route path="/mobile" element={<MobilePortal />} />
 
         <Route path="/" element={<ShipperLayout />}>
@@ -112,6 +115,7 @@ function App() {
 
         <Route path="/v2/broker" element={<WorkspaceShellV2 workspace="broker" />}>
           <Route index element={<BrokerWorkspaceHome />} />
+          <Route path="dashboard" element={<BrokerDashboard />} />
           <Route path="tenders" element={<BrokerTenderQueue />} />
           <Route path="carrier-assignments" element={<CarrierAssignments />} />
           <Route path="active-loads" element={<BrokerActiveLoads />} />
