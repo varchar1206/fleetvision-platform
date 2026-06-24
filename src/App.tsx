@@ -2,6 +2,14 @@ import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import "./App.css";
 
+import ClientPortalShell from "./layouts/portal/ClientPortalShell";
+import ClientPortalHome from "./pages/portal/ClientPortalHome";
+import CompanyProfilePage from "./pages/portal/CompanyProfilePage";
+import UserProfilePage from "./pages/portal/UserProfilePage";
+import RelationshipsPage from "./pages/portal/RelationshipsPage";
+import DocumentsPage from "./pages/portal/DocumentsPage";
+
+
 
 import ShipperDashboard from "./pages/shipper/ShipperDashboard";
 import Planning from "./pages/shipper/Planning";
@@ -145,6 +153,38 @@ function App() {
           <Route path="check-calls" element={<DriverLoadBoard />} />
           <Route path="events" element={<DriverLoadBoard />} />
           <Route path="messages" element={<DriverLoadBoard />} />
+        </Route>
+
+        <Route path="/portal/shipper" element={<ClientPortalShell portal="shipper" />}>
+          <Route index element={<ClientPortalHome portal="shipper" />} />
+          <Route path="company-profile" element={<CompanyProfilePage />} />
+          <Route path="user-profile" element={<UserProfilePage />} />
+          <Route path="relationships" element={<RelationshipsPage />} />
+          <Route path="documents" element={<DocumentsPage />} />
+        </Route>
+
+        <Route path="/portal/broker" element={<ClientPortalShell portal="broker" />}>
+          <Route index element={<ClientPortalHome portal="broker" />} />
+          <Route path="company-profile" element={<CompanyProfilePage />} />
+          <Route path="user-profile" element={<UserProfilePage />} />
+          <Route path="relationships" element={<RelationshipsPage />} />
+          <Route path="documents" element={<DocumentsPage />} />
+        </Route>
+
+        <Route path="/portal/carrier" element={<ClientPortalShell portal="carrier" />}>
+          <Route index element={<ClientPortalHome portal="carrier" />} />
+          <Route path="company-profile" element={<CompanyProfilePage />} />
+          <Route path="user-profile" element={<UserProfilePage />} />
+          <Route path="relationships" element={<RelationshipsPage />} />
+          <Route path="documents" element={<DocumentsPage />} />
+        </Route>
+
+        <Route path="/portal/driver" element={<ClientPortalShell portal="driver" />}>
+          <Route index element={<ClientPortalHome portal="driver" />} />
+          <Route path="company-profile" element={<CompanyProfilePage />} />
+          <Route path="user-profile" element={<UserProfilePage />} />
+          <Route path="relationships" element={<RelationshipsPage />} />
+          <Route path="documents" element={<DocumentsPage />} />
         </Route>
 
       </Routes>
