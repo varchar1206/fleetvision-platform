@@ -155,6 +155,106 @@ const schema = a.schema({
     })
     .authorization((allow) => [allow.publicApiKey()]),
 
+  Organization: a
+    .model({
+      organizationType: a.string().required(),
+      companyName: a.string().required(),
+      displayName: a.string(),
+      dotNumber: a.string(),
+      mcNumber: a.string(),
+      contactName: a.string(),
+      email: a.string(),
+      phone: a.string(),
+      streetAddress: a.string(),
+      city: a.string(),
+      state: a.string(),
+      zipCode: a.string(),
+      status: a.string().required(),
+      verifiedStatus: a.string(),
+      source: a.string(),
+      logoImageKey: a.string(),
+      createdAt: a.string().required(),
+      updatedAt: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+  UserProfile: a
+    .model({
+      cognitoUserId: a.string(),
+      organizationId: a.string(),
+      firstName: a.string(),
+      lastName: a.string(),
+      email: a.string().required(),
+      phone: a.string(),
+      role: a.string().required(),
+      status: a.string().required(),
+      avatarImageKey: a.string(),
+      createdAt: a.string().required(),
+      updatedAt: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+  BusinessRelationship: a
+    .model({
+      parentOrganizationId: a.string().required(),
+      childOrganizationId: a.string().required(),
+      relationshipType: a.string().required(),
+      status: a.string().required(),
+      preferredPartner: a.boolean(),
+      notes: a.string(),
+      createdAt: a.string().required(),
+      updatedAt: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+  DriverProfile: a
+    .model({
+      carrierOrganizationId: a.string().required(),
+      userProfileId: a.string(),
+      driverName: a.string().required(),
+      phone: a.string(),
+      email: a.string(),
+      licenseNumber: a.string(),
+      status: a.string().required(),
+      avatarImageKey: a.string(),
+      createdAt: a.string().required(),
+      updatedAt: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+  Invitation: a
+    .model({
+      invitedByOrganizationId: a.string().required(),
+      invitedOrganizationId: a.string(),
+      invitedEmail: a.string().required(),
+      invitedRole: a.string().required(),
+      relationshipType: a.string(),
+      status: a.string().required(),
+      inviteToken: a.string(),
+      expiresAt: a.string(),
+      createdAt: a.string().required(),
+      acceptedAt: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+  DocumentRecord: a
+    .model({
+      organizationId: a.string(),
+      loadId: a.string(),
+      uploadedByUserProfileId: a.string(),
+      documentType: a.string().required(),
+      fileName: a.string().required(),
+      fileKey: a.string().required(),
+      fileMimeType: a.string(),
+      fileSizeBytes: a.integer(),
+      visibility: a.string(),
+      status: a.string().required(),
+      retentionCategory: a.string(),
+      expiresAt: a.string(),
+      createdAt: a.string().required(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
   Location: a
     .model({
       locationName: a.string().required(),

@@ -10,6 +10,7 @@ export const navigationGroups = [
       { label: "Event Processor", path: "/v2/developer/event-processor", icon: "GitBranch" },
       { label: "Geofence Simulator", path: "/v2/developer/geofence-simulator", icon: "MapPinned" },
       { label: "Delivery Diagnostics", path: "/v2/developer/delivery-diagnostics", icon: "ShieldCheck" },
+      { label: "Client Management", path: "/v2/developer/client-management", icon: "UserRound" },
       { label: "Mobile Portal", path: "/mobile", icon: "Smartphone" },
     ],
   },

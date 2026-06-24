@@ -4,6 +4,7 @@ export default function V2DeveloperPortal() {
   const navigate = useNavigate();
 
   const cards = [
+    { title: "Client Management", route: "/v2/developer/client-management", description: "Seed and review demo organizations, relationships, and driver profiles." },
     { title: "Communication Monitor", route: "/v2/developer/communication-monitor", description: "Monitor communication engine activity." },
     { title: "Automation Center", route: "/v2/developer/automation-center", description: "Review automation rules and queues." },
     { title: "Event Processor", route: "/v2/developer/event-processor", description: "Inspect system event streams." },

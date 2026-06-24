@@ -23,6 +23,7 @@ import AutomationCenter from "./pages/developer/AutomationCenter";
 import EventProcessorMonitor from "./pages/developer/EventProcessorMonitor";
 import GeofenceSimulator from "./pages/developer/GeofenceSimulator";
 import DeliveryDiagnostics from "./pages/developer/DeliveryDiagnostics";
+import ClientManagement from "./pages/developer/ClientManagement";
 import AppShellV2 from "./layouts/v2/AppShellV2";
 import WorkspaceShellV2 from "./layouts/v2/WorkspaceShellV2";
 import V2Home from "./pages/v2/V2Home";
@@ -93,6 +94,7 @@ function App() {
           <Route path="event-processor" element={<EventProcessorMonitor />} />
           <Route path="geofence-simulator" element={<GeofenceSimulator />} />
           <Route path="delivery-diagnostics" element={<DeliveryDiagnostics />} />
+          <Route path="client-management" element={<ClientManagement />} />
         </Route>
 
         <Route path="/mobile" element={<MobilePortal />} />
