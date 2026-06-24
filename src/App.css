@@ -488,3 +488,100 @@ button:active {
 .v2-nav-group a:hover {
   background: rgba(255, 255, 255, 0.10);
 }
+
+.communication-actions-page {
+  padding: 24px 0;
+}
+
+.communication-actions-panel {
+  background: #ffffff;
+  border: 1px solid #dbe3ef;
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.communication-actions-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.communication-actions-header h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
+}
+
+.communication-actions-header p {
+  margin: 0;
+  max-width: 900px;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.communication-section {
+  margin-top: 28px;
+}
+
+.communication-section h2 {
+  margin: 0 0 14px;
+  font-size: 18px;
+}
+
+.communication-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.communication-form-grid.single {
+  max-width: 420px;
+}
+
+.communication-form-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.communication-form-grid input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 15px;
+}
+
+.communication-action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.communication-action-grid button {
+  width: 100%;
+  min-height: 52px;
+  border: none;
+  border-radius: 12px;
+  background: #2447c6;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.communication-action-grid button:hover {
+  filter: brightness(0.95);
+}
+
+.communication-status {
+  margin-top: 24px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #dbe3ef;
+}

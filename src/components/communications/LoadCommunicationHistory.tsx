@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../../../amplify/data/resource";
+import { formatEasternDateTime } from "../../utils/dateTime";
 
 const client = generateClient<Schema>();
 
@@ -58,7 +59,7 @@ export default function LoadCommunicationHistory({ loadId }: Props) {
                 <td>{message.status}</td>
                 <td>{message.relatedEventType}</td>
                 <td>{message.message}</td>
-                <td>{message.createdAt}</td>
+                <td>{formatEasternDateTime(message.createdAt)}</td>
               </tr>
             ))}
           </tbody>

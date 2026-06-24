@@ -1,4 +1,5 @@
 import type { Schema } from "../../../amplify/data/resource";
+import { formatEasternDateTime } from "../../utils/dateTime";
 
 type LoadEventRecord = Schema["LoadEvent"]["type"];
 
@@ -27,7 +28,7 @@ export default function LoadEventGrid({ events }: Props) {
             <tr key={event.id}>
               <td>{event.loadId}</td>
               <td>{event.eventType}</td>
-              <td>{event.eventTime}</td>
+              <td>{formatEasternDateTime(event.eventTime)}</td>
               <td>{event.eventSource}</td>
               <td>{event.notes}</td>
             </tr>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../../../amplify/data/resource";
+import { formatEasternDateTime } from "../../utils/dateTime";
 import CommunicationDetailsPanel from "../../components/communications/CommunicationDetailsPanel";
 
 
@@ -139,7 +140,7 @@ export default function CommunicationLogPage() {
                   <td>{message.recipientName || message.recipientContact}</td>
                   <td>{message.status}</td>
                   <td>{message.relatedEventType}</td>
-                  <td>{message.createdAt}</td>
+                  <td>{formatEasternDateTime(message.createdAt)}</td>
                 </tr>
               ))}
             </tbody>

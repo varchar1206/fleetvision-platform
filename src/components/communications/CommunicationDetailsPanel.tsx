@@ -1,4 +1,5 @@
 import type { Schema } from "../../../amplify/data/resource";
+import { formatEasternDateTime } from "../../utils/dateTime";
 
 type CommunicationRecord = Schema["CommunicationLog"]["type"];
 
@@ -24,7 +25,7 @@ export default function CommunicationDetailsPanel({ message, onClose }: Props) {
       <p><strong>Event:</strong> {message.relatedEventType}</p>
       <p><strong>Subject:</strong> {message.subject || "N/A"}</p>
       <p><strong>Message:</strong> {message.message}</p>
-      <p><strong>Created:</strong> {message.createdAt}</p>
+      <p><strong>Created:</strong> {formatEasternDateTime(message.createdAt)}</p>
 
       <button onClick={onClose}>Close Details</button>
     </div>

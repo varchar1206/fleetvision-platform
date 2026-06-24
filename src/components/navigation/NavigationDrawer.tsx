@@ -20,6 +20,12 @@ import {
   Map,
   ChevronDown,
   ChevronRight,
+  MessageSquareText,
+  MessageCircleReply,
+  Send,
+  Workflow,
+  GitBranch,
+  ShieldCheck,
 } from "lucide-react";
 
 import { navigationGroups } from "../../config/navigation";
@@ -47,6 +53,12 @@ const icons = {
   History,
   MapPinned,
   Map,
+  MessageSquareText,
+  MessageCircleReply,
+  Send,
+  Workflow,
+  GitBranch,
+  ShieldCheck,
 };
 
 export default function NavigationDrawer({ isOpen, onClose }: Props) {

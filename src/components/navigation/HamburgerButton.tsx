@@ -4,7 +4,7 @@ type Props = {
 
 export default function HamburgerButton({ onClick }: Props) {
   return (
-    <button className="btn btn-secondary v2-menu-button" onClick={onClick}>
+    <button className="btn btn-secondary v2-menu-button dispatch-v2-menu-button" onClick={onClick}>
       Menu
     </button>
   );
