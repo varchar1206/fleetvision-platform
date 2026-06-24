@@ -20,15 +20,7 @@ export default function CommunicationLogPage() {
     setSelectedMessage(message);
 
     
-    const popup = window.open(
-      "#/communications/details",
-      "communication-details",
-      "width=720,height=800,noopener,noreferrer"
-    );
-
-    if (!popup) {
-      setSelectedMessage(message);
-    }
+    
   }
 
   async function loadMessages() {
