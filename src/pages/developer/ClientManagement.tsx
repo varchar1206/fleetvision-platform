@@ -95,6 +95,33 @@ export default function ClientManagement() {
       });
     }
 
+    for (const org of createdOrganizations) {
+      await client.models.UserProfile.create({
+        organizationId: org.id,
+        firstName: "Demo",
+        lastName: org.organizationType ?? "User",
+        email: org.email ?? "demo@fleetvision.test",
+        phone: org.phone,
+        role: `${org.organizationType}_ADMIN`,
+        status: "ACTIVE",
+        createdAt: now(),
+        updatedAt: now(),
+      });
+
+      await client.models.DocumentRecord.create({
+        organizationId: org.id,
+        documentType: "COMPANY_PROFILE",
+        fileName: `${org.companyName}-profile-placeholder.pdf`,
+        fileKey: `demo/${org.id}/company-profile-placeholder.pdf`,
+        fileMimeType: "application/pdf",
+        fileSizeBytes: 0,
+        visibility: "PRIVATE",
+        status: "PLACEHOLDER",
+        retentionCategory: "COMPANY_RECORD",
+        createdAt: now(),
+      });
+    }
+
     if (carrier) {
       const driverNames = ["Marcus Reed", "Elena Torres", "James Walker", "Danielle Price"];
 
