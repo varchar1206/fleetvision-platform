@@ -1,4 +1,20 @@
-export default function CompanyProfilePage() {
+import { useEffect, useState } from "react";
+import type { Schema } from "../../../amplify/data/resource";
+import { getDemoOrganizationByType, type PortalType } from "../../services/portal/getPortalDemoData";
+
+type Organization = Schema["Organization"]["type"];
+
+type Props = {
+  portalType?: PortalType;
+};
+
+export default function CompanyProfilePage({ portalType = "SHIPPER" }: Props) {
+  const [organization, setOrganization] = useState<Organization | null>(null);
+
+  useEffect(() => {
+    getDemoOrganizationByType(portalType).then(setOrganization);
+  }, [portalType]);
+
   return (
     <section>
       <div className="page-header">
@@ -16,8 +32,13 @@ export default function CompanyProfilePage() {
         </div>
 
         <div className="card">
-          <h2>Company Information</h2>
-          <p>Name, email, phone, address, DOT number, MC number, and verification status.</p>
+          <h2>{organization?.companyName ?? "No demo organization found"}</h2>
+          <p><strong>Type:</strong> {organization?.organizationType ?? "N/A"}</p>
+          <p><strong>Email:</strong> {organization?.email ?? "N/A"}</p>
+          <p><strong>Phone:</strong> {organization?.phone ?? "N/A"}</p>
+          <p><strong>DOT:</strong> {organization?.dotNumber ?? "N/A"}</p>
+          <p><strong>MC:</strong> {organization?.mcNumber ?? "N/A"}</p>
+          <p><strong>Status:</strong> {organization?.status ?? "N/A"}</p>
         </div>
       </div>
     </section>

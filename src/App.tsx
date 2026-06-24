@@ -157,34 +157,34 @@ function App() {
 
         <Route path="/portal/shipper" element={<ClientPortalShell portal="shipper" />}>
           <Route index element={<ClientPortalHome portal="shipper" />} />
-          <Route path="company-profile" element={<CompanyProfilePage />} />
-          <Route path="user-profile" element={<UserProfilePage />} />
-          <Route path="relationships" element={<RelationshipsPage />} />
-          <Route path="documents" element={<DocumentsPage />} />
+          <Route path="company-profile" element={<CompanyProfilePage portalType="SHIPPER" />} />
+          <Route path="user-profile" element={<UserProfilePage portalType="SHIPPER" />} />
+          <Route path="relationships" element={<RelationshipsPage portalType="SHIPPER" />} />
+          <Route path="documents" element={<DocumentsPage portalType="SHIPPER" />} />
         </Route>
 
         <Route path="/portal/broker" element={<ClientPortalShell portal="broker" />}>
           <Route index element={<ClientPortalHome portal="broker" />} />
-          <Route path="company-profile" element={<CompanyProfilePage />} />
-          <Route path="user-profile" element={<UserProfilePage />} />
-          <Route path="relationships" element={<RelationshipsPage />} />
-          <Route path="documents" element={<DocumentsPage />} />
+          <Route path="company-profile" element={<CompanyProfilePage portalType="BROKER" />} />
+          <Route path="user-profile" element={<UserProfilePage portalType="BROKER" />} />
+          <Route path="relationships" element={<RelationshipsPage portalType="BROKER" />} />
+          <Route path="documents" element={<DocumentsPage portalType="BROKER" />} />
         </Route>
 
         <Route path="/portal/carrier" element={<ClientPortalShell portal="carrier" />}>
           <Route index element={<ClientPortalHome portal="carrier" />} />
-          <Route path="company-profile" element={<CompanyProfilePage />} />
-          <Route path="user-profile" element={<UserProfilePage />} />
-          <Route path="relationships" element={<RelationshipsPage />} />
-          <Route path="documents" element={<DocumentsPage />} />
+          <Route path="company-profile" element={<CompanyProfilePage portalType="CARRIER" />} />
+          <Route path="user-profile" element={<UserProfilePage portalType="CARRIER" />} />
+          <Route path="relationships" element={<RelationshipsPage portalType="CARRIER" />} />
+          <Route path="documents" element={<DocumentsPage portalType="CARRIER" />} />
         </Route>
 
         <Route path="/portal/driver" element={<ClientPortalShell portal="driver" />}>
           <Route index element={<ClientPortalHome portal="driver" />} />
-          <Route path="company-profile" element={<CompanyProfilePage />} />
-          <Route path="user-profile" element={<UserProfilePage />} />
-          <Route path="relationships" element={<RelationshipsPage />} />
-          <Route path="documents" element={<DocumentsPage />} />
+          <Route path="company-profile" element={<CompanyProfilePage portalType="DRIVER" />} />
+          <Route path="user-profile" element={<UserProfilePage portalType="DRIVER" />} />
+          <Route path="relationships" element={<RelationshipsPage portalType="DRIVER" />} />
+          <Route path="documents" element={<DocumentsPage portalType="DRIVER" />} />
         </Route>
 
       </Routes>

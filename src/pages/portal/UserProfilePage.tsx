@@ -1,4 +1,30 @@
-export default function UserProfilePage() {
+import { useEffect, useState } from "react";
+import type { Schema } from "../../../amplify/data/resource";
+import {
+  getDemoOrganizationByType,
+  getDemoUserProfileForOrganization,
+  type PortalType,
+} from "../../services/portal/getPortalDemoData";
+
+type UserProfile = Schema["UserProfile"]["type"];
+
+type Props = {
+  portalType?: PortalType;
+};
+
+export default function UserProfilePage({ portalType = "SHIPPER" }: Props) {
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+
+  useEffect(() => {
+    async function loadProfile() {
+      const organization = await getDemoOrganizationByType(portalType);
+      const userProfile = await getDemoUserProfileForOrganization(organization?.id);
+      setProfile(userProfile);
+    }
+
+    loadProfile();
+  }, [portalType]);
+
   return (
     <section>
       <div className="page-header">
@@ -16,8 +42,11 @@ export default function UserProfilePage() {
         </div>
 
         <div className="card">
-          <h2>User Information</h2>
-          <p>Name, email, phone, role, organization, and profile status.</p>
+          <h2>{profile ? `${profile.firstName ?? ""} ${profile.lastName ?? ""}` : "No demo user profile found"}</h2>
+          <p><strong>Email:</strong> {profile?.email ?? "N/A"}</p>
+          <p><strong>Phone:</strong> {profile?.phone ?? "N/A"}</p>
+          <p><strong>Role:</strong> {profile?.role ?? "N/A"}</p>
+          <p><strong>Status:</strong> {profile?.status ?? "N/A"}</p>
         </div>
       </div>
     </section>
