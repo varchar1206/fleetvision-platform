@@ -7,7 +7,7 @@ export default function PortalAdminHome() {
     { title: "Organizations", route: "/portal/admin/organizations", description: "Manage shippers, brokers, carriers, and multi-role organizations." },
     { title: "Relationships", route: "/portal/admin/relationships", description: "Manage shipper-broker, shipper-carrier, broker-carrier, and carrier-driver links." },
     { title: "Drivers", route: "/portal/admin/drivers", description: "Manage driver profiles connected to carrier organizations." },
-    { title: "Invitations", route: "/portal/admin/invitations", description: "Manage invited users and organizations before Cognito onboarding." },
+    { title: "Onboarding Center", route: "/portal/admin/invitations", description: "Invite shippers, brokers, carriers, and drivers before Cognito onboarding." },
   ];
 
   return (
