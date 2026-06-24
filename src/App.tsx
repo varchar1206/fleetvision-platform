@@ -17,6 +17,7 @@ import LoadEventHistory from "./pages/events/LoadEventHistory";
 import LocationTracking from "./pages/gps/LocationTracking";
 import LocationMaster from "./pages/locations/LocationMaster";
 import CommunicationLogPage from "./pages/communications/CommunicationLogPage";
+import CommunicationMessageWindowPage from "./pages/communications/CommunicationMessageWindowPage";
 import DriverAttestationTestPage from "./pages/communications/DriverAttestationTestPage";
 import DeveloperPortal from "./pages/developer/DeveloperPortal";
 import AppShellV2 from "./layouts/v2/AppShellV2";
@@ -57,6 +58,7 @@ function App() {
           <Route path="gps" element={<LocationTracking />} />
           <Route path="locations" element={<LocationMaster />} />
           <Route path="communications" element={<CommunicationLogPage />} />
+          <Route path="communications/details/:messageId" element={<CommunicationMessageWindowPage />} />
           <Route path="driver-attestation-test" element={<DriverAttestationTestPage />} />
         </Route>
 
