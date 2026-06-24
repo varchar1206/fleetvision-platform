@@ -32,6 +32,7 @@ import V2Home from "./pages/v2/V2Home";
 import WorkspaceLauncher from "./pages/v2/WorkspaceLauncher";
 import V2DeveloperPortal from "./pages/v2/V2DeveloperPortal";
 import BrokerWorkspaceHome from "./pages/v2/broker/BrokerWorkspaceHome";
+import DispatchWorkspaceHome from "./pages/v2/dispatch/DispatchWorkspaceHome";
 import MobilePortal from "./pages/mobile/MobilePortal";
 
 import BrokerDashboard from "./pages/broker/BrokerDashboard";
@@ -59,6 +60,7 @@ function App() {
           <Route path="planning" element={<Planning />} />
           <Route path="communications" element={<CommunicationLogPage />} />
           <Route path="communication-actions" element={<CommunicationActionsPage />} />
+          <Route path="communication-log" element={<CommunicationLogPage />} />
           <Route path="driver-attestation-test" element={<DriverAttestationTestPage />} />
           <Route path="events" element={<LoadEventHistory />} />
           <Route path="gps" element={<LocationTracking />} />
@@ -88,6 +90,24 @@ function App() {
           <Route path="communications/actions" element={<CommunicationActionsPage />} />
           <Route path="communications/details/:messageId" element={<CommunicationMessageWindowPage />} />
           <Route path="driver-attestation-test" element={<DriverAttestationTestPage />} />
+        </Route>
+
+        <Route path="/v2/dispatch" element={<WorkspaceShellV2 workspace="dispatch" />}>
+          <Route index element={<DispatchWorkspaceHome />} />
+          <Route path="dashboard" element={<ShipperDashboard />} />
+          <Route path="planning" element={<Planning />} />
+          <Route path="tender-queue" element={<TenderQueue />} />
+          <Route path="active-loads" element={<ActiveLoads />} />
+          <Route path="completed-loads" element={<CompletedLoads />} />
+          <Route path="exceptions" element={<Exceptions />} />
+          <Route path="performance" element={<Performance />} />
+          <Route path="notifications" element={<NotificationCenter />} />
+          <Route path="communication-actions" element={<CommunicationActionsPage />} />
+          <Route path="communication-log" element={<CommunicationLogPage />} />
+          <Route path="driver-attestation-test" element={<DriverAttestationTestPage />} />
+          <Route path="events" element={<LoadEventHistory />} />
+          <Route path="gps" element={<LocationTracking />} />
+          <Route path="locations" element={<LocationMaster />} />
         </Route>
 
         <Route path="/v2/broker" element={<WorkspaceShellV2 workspace="broker" />}>

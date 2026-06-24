@@ -16,13 +16,14 @@ export const navigationGroups = [
   {
     title: "Dispatch",
     links: [
-      { label: "Daily Dashboard", path: "/", icon: "Activity" },
-      { label: "Planning", path: "/planning", icon: "CalendarDays" },
-      { label: "Tender Queue", path: "/tender-queue", icon: "ClipboardList" },
-      { label: "Active Loads", path: "/active-loads", icon: "Truck" },
-      { label: "Completed Loads", path: "/completed-loads", icon: "CheckCircle2" },
-      { label: "Exceptions", path: "/exceptions", icon: "TriangleAlert" },
-      { label: "Performance", path: "/performance", icon: "BarChart3" },
+      { label: "Dispatch Home", path: "/v2/dispatch", icon: "Activity" },
+      { label: "Daily Dashboard", path: "/v2/dispatch/dashboard", icon: "LayoutDashboard" },
+      { label: "Planning", path: "/v2/dispatch/planning", icon: "CalendarDays" },
+      { label: "Tender Queue", path: "/v2/dispatch/tender-queue", icon: "ClipboardList" },
+      { label: "Active Loads", path: "/v2/dispatch/active-loads", icon: "Truck" },
+      { label: "Completed Loads", path: "/v2/dispatch/completed-loads", icon: "CheckCircle2" },
+      { label: "Exceptions", path: "/v2/dispatch/exceptions", icon: "TriangleAlert" },
+      { label: "Performance", path: "/v2/dispatch/performance", icon: "BarChart3" },
     ],
   },
   {
@@ -36,13 +37,13 @@ export const navigationGroups = [
   {
     title: "Visibility",
     links: [
-      { label: "Notifications", path: "/notifications", icon: "Bell" },
-      { label: "Communication Log", path: "/v2/communications", icon: "MessageSquareText" },
-      { label: "Communication Actions", path: "/communications/actions", icon: "Send" },
-      { label: "Driver Attestation Test", path: "/v2/driver-attestation-test", icon: "MessageCircleReply" },
-      { label: "Event History", path: "/v2/events", icon: "History" },
-      { label: "GPS Tracking", path: "/v2/gps", icon: "MapPinned" },
-      { label: "Location Master", path: "/v2/locations", icon: "Map" },
+      { label: "Notifications", path: "/v2/dispatch/notifications", icon: "Bell" },
+      { label: "Communication Log", path: "/v2/dispatch/communication-log", icon: "MessageSquareText" },
+      { label: "Communication Actions", path: "/v2/dispatch/communication-actions", icon: "Send" },
+      { label: "Driver Attestation Test", path: "/v2/dispatch/driver-attestation-test", icon: "MessageCircleReply" },
+      { label: "Event History", path: "/v2/dispatch/events", icon: "History" },
+      { label: "GPS Tracking", path: "/v2/dispatch/gps", icon: "MapPinned" },
+      { label: "Location Master", path: "/v2/dispatch/locations", icon: "Map" },
     ],
   },
 ];

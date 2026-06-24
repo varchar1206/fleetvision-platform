@@ -7,7 +7,7 @@ export default function WorkspaceLauncher() {
     {
       title: "Dispatch Workspace",
       description: "Planning, execution, tenders, load management, and communications.",
-      route: "/",
+      route: "/v2/dispatch",
     },
     {
       title: "Developer Workspace",
