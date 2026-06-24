@@ -9,6 +9,13 @@ import UserProfilePage from "./pages/portal/UserProfilePage";
 import RelationshipsPage from "./pages/portal/RelationshipsPage";
 import DocumentsPage from "./pages/portal/DocumentsPage";
 
+import PortalAdminHome from "./pages/portal/admin/PortalAdminHome";
+import OrganizationsAdminPage from "./pages/portal/admin/OrganizationsAdminPage";
+import RelationshipsAdminPage from "./pages/portal/admin/RelationshipsAdminPage";
+import DriversAdminPage from "./pages/portal/admin/DriversAdminPage";
+import InvitationsAdminPage from "./pages/portal/admin/InvitationsAdminPage";
+
+
 
 
 import ShipperDashboard from "./pages/shipper/ShipperDashboard";
@@ -185,6 +192,14 @@ function App() {
           <Route path="user-profile" element={<UserProfilePage portalType="DRIVER" />} />
           <Route path="relationships" element={<RelationshipsPage portalType="DRIVER" />} />
           <Route path="documents" element={<DocumentsPage portalType="DRIVER" />} />
+        </Route>
+
+        <Route path="/portal/admin" element={<ClientPortalShell portal="broker" />}>
+          <Route index element={<PortalAdminHome />} />
+          <Route path="organizations" element={<OrganizationsAdminPage />} />
+          <Route path="relationships" element={<RelationshipsAdminPage />} />
+          <Route path="drivers" element={<DriversAdminPage />} />
+          <Route path="invitations" element={<InvitationsAdminPage />} />
         </Route>
 
       </Routes>

@@ -178,6 +178,16 @@ const schema = a.schema({
     })
     .authorization((allow) => [allow.publicApiKey()]),
 
+  OrganizationRole: a
+    .model({
+      organizationId: a.string().required(),
+      roleType: a.string().required(),
+      status: a.string().required(),
+      createdAt: a.string().required(),
+      updatedAt: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
   UserProfile: a
     .model({
       cognitoUserId: a.string(),
