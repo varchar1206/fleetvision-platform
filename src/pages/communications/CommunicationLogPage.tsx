@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../../../amplify/data/resource";
+import CommunicationDetailsPanel from "../../components/communications/CommunicationDetailsPanel";
 
 const client = generateClient<Schema>();
 
@@ -12,6 +13,7 @@ export default function CommunicationLogPage() {
   const [channelFilter, setChannelFilter] = useState("ALL");
   const [directionFilter, setDirectionFilter] = useState("ALL");
   const [statusFilter, setStatusFilter] = useState("ALL");
+  const [selectedMessage, setSelectedMessage] = useState<CommunicationRecord | null>(null);
 
   async function loadMessages() {
     setIsLoading(true);
@@ -96,6 +98,11 @@ export default function CommunicationLogPage() {
         </div>
       </div>
 
+      <CommunicationDetailsPanel
+        message={selectedMessage}
+        onClose={() => setSelectedMessage(null)}
+      />
+
       <div className="table-card">
         <h2>Messages</h2>
 
@@ -117,7 +124,7 @@ export default function CommunicationLogPage() {
 
             <tbody>
               {filteredMessages.map((message) => (
-                <tr key={message.id}>
+                <tr key={message.id} onClick={() => setSelectedMessage(message)} style={{ cursor: "pointer" }}>
                   <td>{message.loadId}</td>
                   <td>{message.direction}</td>
                   <td>{message.channel}</td>
