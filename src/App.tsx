@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 
 import "./App.css";
 
@@ -34,7 +34,7 @@ import BrokerPerformance from "./pages/broker/BrokerPerformance";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/developer" element={<DeveloperPortal />} />
         <Route path="/v2" element={<AppShellV2 />}>
@@ -71,7 +71,7 @@ function App() {
         </Route>
 
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
