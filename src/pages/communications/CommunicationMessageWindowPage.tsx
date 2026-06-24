@@ -4,6 +4,7 @@ import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../../../amplify/data/resource";
 
 import CommunicationDetailsPanel from "../../components/communications/CommunicationDetailsPanel";
+import LoadCommunicationHistory from "../../components/communications/LoadCommunicationHistory";
 
 const client = generateClient<Schema>();
 
@@ -52,7 +53,10 @@ export default function CommunicationMessageWindowPage() {
           <p>Loading communication details...</p>
         </div>
       ) : (
-        <CommunicationDetailsPanel message={message} onClose={handleClose} />
+        <>
+          <CommunicationDetailsPanel message={message} onClose={handleClose} />
+          <LoadCommunicationHistory loadId={message?.loadId} />
+        </>
       )}
     </section>
   );
