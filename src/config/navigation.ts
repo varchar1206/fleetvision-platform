@@ -2,7 +2,7 @@ export const navigationGroups = [
   {
     title: "Workspace",
     links: [
-      { label: "V2 Dashboard", path: "/v2", icon: "LayoutDashboard" },
+      { label: "Test Area Home", path: "/v2", icon: "LayoutDashboard" },
       { label: "Workspace Launcher", path: "/v2/workspaces", icon: "LayoutDashboard" },
       { label: "Developer Portal", path: "/v2/developer", icon: "Code2" },
       { label: "Communication Monitor", path: "/v2/communication-monitor", icon: "Activity" },
@@ -28,7 +28,7 @@ export const navigationGroups = [
   {
     title: "Partner Portals",
     links: [
-      { label: "Broker Portal", path: "/broker", icon: "Handshake" },
+      { label: "Broker Workspace", path: "/v2/broker", icon: "Handshake" },
       { label: "Carrier Portal", path: "/carrier", icon: "Warehouse" },
       { label: "Driver Portal", path: "/driver", icon: "UserRound" },
     ],
