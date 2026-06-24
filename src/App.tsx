@@ -27,7 +27,7 @@ import EventProcessorMonitor from "./pages/developer/EventProcessorMonitor";
 import GeofenceSimulator from "./pages/developer/GeofenceSimulator";
 import DeliveryDiagnostics from "./pages/developer/DeliveryDiagnostics";
 import AppShellV2 from "./layouts/v2/AppShellV2";
-import BrokerShellV2 from "./layouts/v2/BrokerShellV2";
+import WorkspaceShellV2 from "./layouts/v2/WorkspaceShellV2";
 import V2Home from "./pages/v2/V2Home";
 import WorkspaceLauncher from "./pages/v2/WorkspaceLauncher";
 import V2DeveloperPortal from "./pages/v2/V2DeveloperPortal";
@@ -90,7 +90,7 @@ function App() {
           <Route path="driver-attestation-test" element={<DriverAttestationTestPage />} />
         </Route>
 
-        <Route path="/v2/broker" element={<BrokerShellV2 />}>
+        <Route path="/v2/broker" element={<WorkspaceShellV2 workspace="broker" />}>
           <Route index element={<BrokerWorkspaceHome />} />
           <Route path="tenders" element={<BrokerTenderQueue />} />
           <Route path="carrier-assignments" element={<CarrierAssignments />} />
