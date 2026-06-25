@@ -1,13 +1,11 @@
-import { clientPortals } from "../../config/clientPortals";
-
-type PortalKey = keyof typeof clientPortals;
+import { portalDefinitions, type PortalKey } from "../../portal/config/portalDefinitions";
 
 type Props = {
   portal: PortalKey;
 };
 
 export default function ClientPortalHome({ portal }: Props) {
-  const config = clientPortals[portal];
+  const config = portalDefinitions[portal];
 
   return (
     <section>

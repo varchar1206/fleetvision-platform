@@ -3,6 +3,8 @@ import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 
 import ClientPortalShell from "./layouts/portal/ClientPortalShell";
+import PortalShellV2 from "./portal/layouts/PortalShellV2";
+import PortalPlaceholderPage from "./portal/components/PortalPlaceholderPage";
 import ClientPortalHome from "./pages/portal/ClientPortalHome";
 import CompanyProfilePage from "./pages/portal/CompanyProfilePage";
 import UserProfilePage from "./pages/portal/UserProfilePage";
@@ -162,36 +164,68 @@ function App() {
           <Route path="messages" element={<DriverLoadBoard />} />
         </Route>
 
-        <Route path="/portal/shipper" element={<ClientPortalShell portal="shipper" />}>
+        <Route path="/portal/shipper" element={<PortalShellV2 portal="shipper" />}>
           <Route index element={<ClientPortalHome portal="shipper" />} />
           <Route path="company-profile" element={<CompanyProfilePage portalType="SHIPPER" />} />
           <Route path="user-profile" element={<UserProfilePage portalType="SHIPPER" />} />
           <Route path="relationships" element={<RelationshipsPage portalType="SHIPPER" />} />
+          
           <Route path="documents" element={<DocumentsPage portalType="SHIPPER" />} />
+          <Route path="create-load" element={<PortalPlaceholderPage title="Create Load" description="Create new shipper load requests and tender freight to trusted partners." />} />
+          <Route path="planning" element={<PortalPlaceholderPage title="Planning" description="Plan upcoming shipments, preferred lanes, and freight capacity needs." />} />
+          <Route path="my-loads" element={<PortalPlaceholderPage title="My Loads" description="View current, upcoming, and completed shipper loads." />} />
+          <Route path="tracking" element={<PortalPlaceholderPage title="Tracking" description="Track shipments, milestones, exceptions, and delivery status." />} />
+          <Route path="messages" element={<PortalPlaceholderPage title="Messages" description="Communicate with brokers, carriers, and FleetVision support." />} />
+          <Route path="onboarding" element={<PortalPlaceholderPage title="Onboarding Center" description="Manage company onboarding tasks, invitations, and account setup progress." />} />
+          <Route path="settings" element={<PortalPlaceholderPage title="Settings" description="Manage portal preferences, notifications, and account settings." />} />
         </Route>
 
-        <Route path="/portal/broker" element={<ClientPortalShell portal="broker" />}>
+        <Route path="/portal/broker" element={<PortalShellV2 portal="broker" />}>
           <Route index element={<ClientPortalHome portal="broker" />} />
           <Route path="company-profile" element={<CompanyProfilePage portalType="BROKER" />} />
           <Route path="user-profile" element={<UserProfilePage portalType="BROKER" />} />
           <Route path="relationships" element={<RelationshipsPage portalType="BROKER" />} />
+          
           <Route path="documents" element={<DocumentsPage portalType="BROKER" />} />
+          <Route path="tender-queue" element={<PortalPlaceholderPage title="Tender Queue" description="Review incoming tenders and customer load opportunities." />} />
+          <Route path="carrier-assignments" element={<PortalPlaceholderPage title="Carrier Assignments" description="Assign trusted carriers to active brokered loads." />} />
+          <Route path="active-loads" element={<PortalPlaceholderPage title="Active Loads" description="Monitor active broker-managed freight from pickup to delivery." />} />
+          <Route path="messages" element={<PortalPlaceholderPage title="Messages" description="Communicate with shippers, carriers, drivers, and FleetVision support." />} />
+          <Route path="performance" element={<PortalPlaceholderPage title="Performance" description="Review service metrics, carrier performance, and network trends." />} />
+          <Route path="onboarding" element={<PortalPlaceholderPage title="Onboarding Center" description="Manage onboarding tasks, organization setup, and partner invitations." />} />
+          <Route path="settings" element={<PortalPlaceholderPage title="Settings" description="Manage broker portal preferences, notifications, and account settings." />} />
         </Route>
 
-        <Route path="/portal/carrier" element={<ClientPortalShell portal="carrier" />}>
+        <Route path="/portal/carrier" element={<PortalShellV2 portal="carrier" />}>
           <Route index element={<ClientPortalHome portal="carrier" />} />
           <Route path="company-profile" element={<CompanyProfilePage portalType="CARRIER" />} />
           <Route path="user-profile" element={<UserProfilePage portalType="CARRIER" />} />
           <Route path="relationships" element={<RelationshipsPage portalType="CARRIER" />} />
+          
           <Route path="documents" element={<DocumentsPage portalType="CARRIER" />} />
+          <Route path="load-board" element={<PortalPlaceholderPage title="Load Board" description="Review available loads and carrier freight opportunities." />} />
+          <Route path="driver-assignments" element={<PortalPlaceholderPage title="Driver Assignments" description="Assign drivers to loads and manage dispatch coverage." />} />
+          <Route path="fleet" element={<PortalPlaceholderPage title="Fleet" description="Review fleet status, driver availability, and operational capacity." />} />
+          <Route path="equipment" element={<PortalPlaceholderPage title="Equipment" description="Manage tractors, trailers, equipment details, and availability." />} />
+          <Route path="compliance" element={<PortalPlaceholderPage title="Compliance" description="Track insurance, authority, safety, and document compliance." />} />
+          <Route path="performance" element={<PortalPlaceholderPage title="Performance" description="Review carrier performance, service metrics, and reliability trends." />} />
+          <Route path="onboarding" element={<PortalPlaceholderPage title="Onboarding Center" description="Manage carrier onboarding tasks, documents, and invitations." />} />
+          <Route path="settings" element={<PortalPlaceholderPage title="Settings" description="Manage carrier portal preferences, notifications, and account settings." />} />
         </Route>
 
-        <Route path="/portal/driver" element={<ClientPortalShell portal="driver" />}>
+        <Route path="/portal/driver" element={<PortalShellV2 portal="driver" />}>
           <Route index element={<ClientPortalHome portal="driver" />} />
           <Route path="company-profile" element={<CompanyProfilePage portalType="DRIVER" />} />
           <Route path="user-profile" element={<UserProfilePage portalType="DRIVER" />} />
           <Route path="relationships" element={<RelationshipsPage portalType="DRIVER" />} />
+          
           <Route path="documents" element={<DocumentsPage portalType="DRIVER" />} />
+          <Route path="todays-loads" element={<PortalPlaceholderPage title="Today&apos;s Loads" description="Review today's assigned loads, stops, and delivery requirements." />} />
+          <Route path="navigation" element={<PortalPlaceholderPage title="Navigation" description="Access route guidance, stop details, and location updates." />} />
+          <Route path="messages" element={<PortalPlaceholderPage title="Messages" description="Communicate with dispatch, support, and operations teams." />} />
+          <Route path="load-history" element={<PortalPlaceholderPage title="Load History" description="Review completed driver loads and shipment history." />} />
+          <Route path="inspections" element={<PortalPlaceholderPage title="Inspections" description="Track inspections, vehicle checks, and safety records." />} />
+          <Route path="settings" element={<PortalPlaceholderPage title="Settings" description="Manage driver portal preferences, notifications, and account settings." />} />
         </Route>
 
         <Route path="/portal/admin" element={<ClientPortalShell portal="broker" />}>

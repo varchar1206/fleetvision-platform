@@ -33,6 +33,10 @@ export const navigationGroups = [
       { label: "Broker Workspace", path: "/v2/broker", icon: "Handshake" },
       { label: "Carrier Workspace", path: "/v2/carrier", icon: "Warehouse" },
       { label: "Driver Workspace", path: "/v2/driver", icon: "UserRound" },
+      { label: "Shipper Portal", path: "/portal/shipper", icon: "Building2" },
+      { label: "Broker Portal", path: "/portal/broker", icon: "Briefcase" },
+      { label: "Carrier Portal", path: "/portal/carrier", icon: "Truck" },
+      { label: "Driver Portal", path: "/portal/driver", icon: "User" },
     ],
   },
   {
