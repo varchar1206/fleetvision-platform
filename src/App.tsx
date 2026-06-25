@@ -2,6 +2,8 @@ import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import "./App.css";
 
+import { PlatformProvider } from "./platform/context/PlatformProvider";
+
 import ClientPortalShell from "./layouts/portal/ClientPortalShell";
 import PortalShellV2 from "./portal/layouts/PortalShellV2";
 import PortalPlaceholderPage from "./portal/components/PortalPlaceholderPage";
@@ -64,7 +66,8 @@ import DriverLoadBoard from "./pages/driver/DriverLoadBoard";
 
 function App() {
   return (
-    <HashRouter>
+    <PlatformProvider>
+      <HashRouter>
       <Routes>
         <Route path="/" element={<Navigate to="/v2/dispatch" replace />} />
         <Route path="/planning" element={<Navigate to="/v2/dispatch/planning" replace />} />
@@ -237,7 +240,8 @@ function App() {
         </Route>
 
       </Routes>
-    </HashRouter>
+      </HashRouter>
+    </PlatformProvider>
   );
 }
 
