@@ -1,14 +1,9 @@
-import { createContext, useContext, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-import {
-  portalDefinitions,
-  type PortalKey,
-  type PortalType,
-} from "../config/portalDefinitions";
-import type { PortalOrganization } from "../models/PortalOrganization";
+import { demoIdentityProvider } from "../../platform/identity/DemoIdentityProvider";
+import { buildPortalSession } from "./builders/PortalSessionBuilder";
 import type { PortalSession } from "../models/PortalSession";
-import type { PortalTheme } from "../models/PortalTheme";
-import type { PortalUser } from "../models/PortalUser";
+import type { PortalKey, PortalType } from "../config/portalDefinitions";
 
 const PortalSessionContext = createContext<PortalSession | null>(null);
 
@@ -18,44 +13,39 @@ type PortalSessionProviderProps = {
 };
 
 export function PortalSessionProvider({ portal, children }: PortalSessionProviderProps) {
-  const definition = portalDefinitions[portal];
+  const [session, setSession] = useState<PortalSession | null>(null);
 
-  const organization: PortalOrganization = {
-    id: `demo-${portal}-organization`,
-    name: definition.branding.companyName,
-    type: definition.portalType,
-    branding: definition.branding,
-    permissions: [],
-  };
+  useEffect(() => {
+    let isMounted = true;
 
-  const userNameParts = definition.branding.userName.split(" ");
+    async function loadSession() {
+      const authenticationSession = await demoIdentityProvider.getCurrentSession();
 
-  const user: PortalUser = {
-    id: `demo-${portal}-user`,
-    firstName: userNameParts[0] ?? "Demo",
-    lastName: userNameParts.slice(1).join(" ") || "User",
-    email: `${portal}.user@fleetvision.demo`,
-    role: definition.branding.userRole,
-    organizationId: organization.id,
-    permissions: [],
-  };
+      if (!authenticationSession) {
+        return;
+      }
 
-  const theme: PortalTheme = {
-    sidebarStyle: "light",
-    accentColor: definition.branding.accentColor,
-    borderRadius: "18px",
-  };
+      const portalSession = await buildPortalSession(authenticationSession, portal);
 
-  const session: PortalSession = {
-    portal,
-    portalType: definition.portalType,
-    definition,
-    organization,
-    user,
-    branding: organization.branding,
-    theme,
-    permissions: [...organization.permissions, ...user.permissions],
-  };
+      if (isMounted) {
+        setSession(portalSession);
+      }
+    }
+
+    loadSession();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [portal]);
+
+  if (!session) {
+    return (
+      <div className="portal-session-loading">
+        Loading portal session...
+      </div>
+    );
+  }
 
   return (
     <PortalSessionContext.Provider value={session}>
