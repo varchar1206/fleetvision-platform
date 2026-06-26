@@ -4,9 +4,9 @@ import { portalDefinitions } from "../../config/portalDefinitions";
 import type { PortalSession } from "../../models/PortalSession";
 import type { PortalTheme } from "../../models/PortalTheme";
 import type { PortalUser } from "../../models/PortalUser";
-import { resolveOrganizationForSession } from "../../../business/organizations/resolvers/OrganizationResolver";
-import { resolveRoleForSession } from "../../../business/permissions/resolvers/RoleResolver";
-import { resolvePermissionsForSession } from "../../../business/permissions/resolvers/PermissionResolver";
+import { resolveOrganizationForSession } from "../../../business/identity/OrganizationResolver";
+import { resolveRoleForSession } from "../../../business/identity/RoleResolver";
+import { resolvePermissionsForSession } from "../../../business/identity/PermissionResolver";
 
 export async function buildPortalSession(
   authenticationSession: AuthenticationSession,
