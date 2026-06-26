@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-import { demoIdentityProvider } from "../../platform/identity/DemoIdentityProvider";
+import { getCurrentAuthenticationSession } from "../../platform/identity/IdentityService";
 import { buildPortalSession } from "./builders/PortalSessionBuilder";
 import type { PortalSession } from "../models/PortalSession";
 import type { PortalKey, PortalType } from "../config/portalDefinitions";
@@ -19,7 +19,7 @@ export function PortalSessionProvider({ portal, children }: PortalSessionProvide
     let isMounted = true;
 
     async function loadSession() {
-      const authenticationSession = await demoIdentityProvider.getCurrentSession();
+      const authenticationSession = await getCurrentAuthenticationSession();
 
       if (!authenticationSession) {
         return;
