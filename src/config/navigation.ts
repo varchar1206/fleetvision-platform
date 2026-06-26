@@ -20,6 +20,7 @@ export const navigationGroups = [
       { label: "Dispatch Home", path: "/v2/dispatch", icon: "Activity" },
       { label: "Daily Dashboard", path: "/v2/dispatch/dashboard", icon: "LayoutDashboard" },
       { label: "Planning", path: "/v2/dispatch/planning", icon: "CalendarDays" },
+      { label: "Load Builder", path: "/v2/dispatch/load-builder", icon: "ClipboardPlus" },
       { label: "Tender Queue", path: "/v2/dispatch/tender-queue", icon: "ClipboardList" },
       { label: "Active Loads", path: "/v2/dispatch/active-loads", icon: "Truck" },
       { label: "Completed Loads", path: "/v2/dispatch/completed-loads", icon: "CheckCircle2" },
