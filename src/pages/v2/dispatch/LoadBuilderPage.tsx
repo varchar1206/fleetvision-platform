@@ -4,6 +4,7 @@ import BuildSummaryPanel from "../../../components/load-builder/BuildSummaryPane
 import BulkBuildPanel from "../../../components/load-builder/BulkBuildPanel";
 import BuiltLoadsTable from "../../../components/load-builder/BuiltLoadsTable";
 import DispatchProcessNav from "../../../components/load-builder/DispatchProcessNav";
+import LoadBuilderActions from "../../../components/load-builder/LoadBuilderActions";
 import ReferenceStatusPanel from "../../../components/load-builder/ReferenceStatusPanel";
 import { buildAndValidateLoads } from "../../../business/workflows/LoadWorkflow";
 import type { BusinessLoad } from "../../../business/loads/models/BusinessLoad";
@@ -32,6 +33,7 @@ export default function LoadBuilderPage() {
         <BulkBuildPanel onBuild={handleBuildLoads} />
         <ReferenceStatusPanel />
         <BuildSummaryPanel loads={loads} />
+        <LoadBuilderActions loads={loads} onLoadsUpdated={setLoads} />
       </div>
 
       <BuiltLoadsTable loads={loads} />
