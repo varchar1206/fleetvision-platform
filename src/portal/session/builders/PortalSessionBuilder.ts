@@ -1,6 +1,8 @@
 import type { AuthenticationSession } from "../../../platform/identity/AuthenticationSession";
 import type { PortalKey } from "../../config/portalDefinitions";
 import { portalDefinitions } from "../../config/portalDefinitions";
+import type { PortalOrganization } from "../../models/PortalOrganization";
+import type { PortalPermission } from "../../models/PortalPermission";
 import type { PortalSession } from "../../models/PortalSession";
 import type { PortalTheme } from "../../models/PortalTheme";
 import type { PortalUser } from "../../models/PortalUser";
@@ -13,14 +15,27 @@ export async function buildPortalSession(
   portal: PortalKey
 ): Promise<PortalSession> {
   const definition = portalDefinitions[portal];
-  const organization = await resolveOrganizationForSession(authenticationSession, portal);
-  const role = await resolveRoleForSession(authenticationSession, organization, portal);
-  const permissionKeys = await resolvePermissionsForSession(authenticationSession, role, portal);
 
-  const permissions = permissionKeys.map((key) => ({
-    key,
-    description: `${key} permission`,
+  const businessOrganization = await resolveOrganizationForSession(authenticationSession, portal);
+  const businessRole = await resolveRoleForSession(authenticationSession, businessOrganization, portal);
+  const businessPermissions = await resolvePermissionsForSession(
+    authenticationSession,
+    businessRole,
+    portal
+  );
+
+  const portalPermissions: PortalPermission[] = businessPermissions.map((permission) => ({
+    key: permission.key,
+    description: permission.description,
   }));
+
+  const portalOrganization: PortalOrganization = {
+    id: businessOrganization.id,
+    name: businessOrganization.name,
+    type: businessOrganization.type,
+    branding: definition.branding,
+    permissions: portalPermissions,
+  };
 
   const nameParts = (authenticationSession.displayName ?? definition.branding.userName).split(" ");
 
@@ -29,9 +44,9 @@ export async function buildPortalSession(
     firstName: nameParts[0] ?? "Demo",
     lastName: nameParts.slice(1).join(" ") || "User",
     email: authenticationSession.email,
-    role,
-    organizationId: organization.id,
-    permissions,
+    role: businessRole.label,
+    organizationId: portalOrganization.id,
+    permissions: portalPermissions,
   };
 
   const theme: PortalTheme = {
@@ -44,10 +59,10 @@ export async function buildPortalSession(
     portal,
     portalType: definition.portalType,
     definition,
-    organization,
+    organization: portalOrganization,
     user,
-    branding: organization.branding,
+    branding: portalOrganization.branding,
     theme,
-    permissions,
+    permissions: portalPermissions,
   };
 }

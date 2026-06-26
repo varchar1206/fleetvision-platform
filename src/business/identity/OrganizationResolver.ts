@@ -1,12 +1,12 @@
 import type { AuthenticationSession } from "../../platform/identity/AuthenticationSession";
-import type { PortalOrganization } from "../../portal/models/PortalOrganization";
 import type { PortalKey } from "../../portal/config/portalDefinitions";
 import { portalDefinitions } from "../../portal/config/portalDefinitions";
+import type { BusinessOrganization } from "../models/BusinessOrganization";
 
 export async function resolveOrganizationForSession(
   _session: AuthenticationSession,
   portal: PortalKey
-): Promise<PortalOrganization> {
+): Promise<BusinessOrganization> {
   void _session;
 
   const definition = portalDefinitions[portal];
@@ -15,7 +15,6 @@ export async function resolveOrganizationForSession(
     id: `demo-${portal}-organization`,
     name: definition.branding.companyName,
     type: definition.portalType,
-    branding: definition.branding,
-    permissions: [],
+    status: "ACTIVE",
   };
 }

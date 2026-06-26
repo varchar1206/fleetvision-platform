@@ -1,16 +1,21 @@
 import type { AuthenticationSession } from "../../platform/identity/AuthenticationSession";
-import type { PortalOrganization } from "../../portal/models/PortalOrganization";
 import type { PortalKey } from "../../portal/config/portalDefinitions";
 import { portalDefinitions } from "../../portal/config/portalDefinitions";
+import type { BusinessOrganization } from "../models/BusinessOrganization";
+import type { BusinessRole } from "../models/BusinessRole";
 
 export async function resolveRoleForSession(
   _session: AuthenticationSession,
-  organization: PortalOrganization,
+  organization: BusinessOrganization,
   portal: PortalKey
-): Promise<string> {
+): Promise<BusinessRole> {
   void _session;
 
   const definition = portalDefinitions[portal];
 
-  return definition.branding.userRole || organization.type;
+  return {
+    key: `${portal}-role`,
+    label: definition.branding.userRole || organization.type,
+    organizationId: organization.id,
+  };
 }
