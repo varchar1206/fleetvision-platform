@@ -227,3 +227,36 @@
     align-items: stretch;
   }
 }
+
+/* FleetVision containment hardening */
+.fleet-card {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.fleet-card-body {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.fleet-action-bar {
+  width: 100%;
+  min-width: 0;
+}
+
+.fleet-action-bar .fleet-button {
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .fleet-button {
+    width: 100%;
+  }
+
+  .fleet-action-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
