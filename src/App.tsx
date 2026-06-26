@@ -8,6 +8,7 @@ import ClientPortalShell from "./layouts/portal/ClientPortalShell";
 import PortalShellV2 from "./portal/layouts/PortalShellV2";
 import PortalPlaceholderPage from "./portal/components/PortalPlaceholderPage";
 import ClientPortalHome from "./pages/portal/ClientPortalHome";
+import CreateLoadPage from "./pages/portal/CreateLoadPage";
 import CompanyProfilePage from "./pages/portal/CompanyProfilePage";
 import UserProfilePage from "./pages/portal/UserProfilePage";
 import RelationshipsPage from "./pages/portal/RelationshipsPage";
@@ -177,7 +178,7 @@ function App() {
           <Route path="relationships" element={<RelationshipsPage portalType="SHIPPER" />} />
           
           <Route path="documents" element={<DocumentsPage portalType="SHIPPER" />} />
-          <Route path="create-load" element={<PortalPlaceholderPage title="Create Load" description="Create new shipper load requests and tender freight to trusted partners." />} />
+          <Route path="create-load" element={<CreateLoadPage />} />
           <Route path="planning" element={<PortalPlaceholderPage title="Planning" description="Plan upcoming shipments, preferred lanes, and freight capacity needs." />} />
           <Route path="my-loads" element={<PortalPlaceholderPage title="My Loads" description="View current, upcoming, and completed shipper loads." />} />
           <Route path="tracking" element={<PortalPlaceholderPage title="Tracking" description="Track shipments, milestones, exceptions, and delivery status." />} />
