@@ -1,6 +1,7 @@
 import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import "./App.css";
+import "./styles/fleet-ui.css";
 
 import { PlatformProvider } from "./platform/context/PlatformProvider";
 
