@@ -1,5 +1,8 @@
 import { submitLoadsForApproval } from "../../business/workflows/ApprovalWorkflow";
 import type { BusinessLoad } from "../../business/loads/models/BusinessLoad";
+import FleetActionBar from "../ui/FleetActionBar";
+import FleetButton from "../ui/FleetButton";
+import FleetCard from "../ui/FleetCard";
 
 type LoadBuilderActionsProps = {
   loads: BusinessLoad[];
@@ -26,20 +29,19 @@ export default function LoadBuilderActions({
   }
 
   return (
-    <div className="card">
-      <h2>Load Actions</h2>
+    <FleetCard title="Load Actions" eyebrow="Approval Handoff">
       <p>Ready to Submit: {readyLoads.length}</p>
-
-      <button
-        className="primary-button"
-        type="button"
-        disabled={readyLoads.length === 0}
-        onClick={handleSubmitForApproval}
-      >
-        Submit Ready Loads For Approval
-      </button>
-
       <p>Generate BOL is intentionally unavailable in Load Builder.</p>
-    </div>
+
+      <FleetActionBar align="right">
+        <FleetButton
+          variant="primary"
+          disabled={readyLoads.length === 0}
+          onClick={handleSubmitForApproval}
+        >
+          Submit Ready Loads For Approval
+        </FleetButton>
+      </FleetActionBar>
+    </FleetCard>
   );
 }
