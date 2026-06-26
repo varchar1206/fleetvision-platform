@@ -1,14 +1,20 @@
 import { useMemo, useState } from "react";
 
 import DispatchProcessNav from "../../../components/load-builder/DispatchProcessNav";
-import { buildAndValidateLoads } from "../../../business/workflows/LoadWorkflow";
+import BuiltLoadsTable from "../../../components/load-builder/BuiltLoadsTable";
 import {
   approveLoads,
   rejectLoads,
   submitLoadsForApproval,
 } from "../../../business/workflows/ApprovalWorkflow";
+import { buildAndValidateLoads } from "../../../business/workflows/LoadWorkflow";
 import type { BusinessLoad } from "../../../business/loads/models/BusinessLoad";
 import { generateBolForLoad } from "../../../business/loads/services/DocumentService";
+import FleetActionBar from "../../../components/ui/FleetActionBar";
+import FleetButton from "../../../components/ui/FleetButton";
+import FleetCard from "../../../components/ui/FleetCard";
+import FleetGrid from "../../../design-system/layout/FleetGrid";
+import FleetPage from "../../../design-system/layout/FleetPage";
 
 export default function ApprovalQueuePage() {
   const initialLoads = useMemo(() => {
@@ -23,103 +29,82 @@ export default function ApprovalQueuePage() {
   }, []);
 
   const [loads, setLoads] = useState<BusinessLoad[]>(initialLoads);
-
   const pendingLoads = loads.filter((load) => load.status === "PendingApproval");
+  const approvedLoads = loads.filter((load) => load.status === "Approved");
 
-  function handleApproveAll() {
-    const approvedLoads = approveLoads(pendingLoads);
-    const approvedIds = new Set(approvedLoads.map((load) => load.id));
+  function updateChangedLoads(changedLoads: BusinessLoad[]) {
+    const changedIds = new Set(changedLoads.map((load) => load.id));
 
     setLoads((currentLoads) =>
       currentLoads.map((load) =>
-        approvedIds.has(load.id)
-          ? approvedLoads.find((approvedLoad) => approvedLoad.id === load.id) ?? load
+        changedIds.has(load.id)
+          ? changedLoads.find((changedLoad) => changedLoad.id === load.id) ?? load
           : load
       )
     );
+  }
+
+  function handleApproveAll() {
+    updateChangedLoads(approveLoads(pendingLoads));
   }
 
   function handleRejectAll() {
-    const rejectedLoads = rejectLoads(pendingLoads, "Rejected during demo approval review.");
-    const rejectedIds = new Set(rejectedLoads.map((load) => load.id));
-
-    setLoads((currentLoads) =>
-      currentLoads.map((load) =>
-        rejectedIds.has(load.id)
-          ? rejectedLoads.find((rejectedLoad) => rejectedLoad.id === load.id) ?? load
-          : load
-      )
-    );
+    updateChangedLoads(rejectLoads(pendingLoads, "Rejected during demo approval review."));
   }
 
   function handleGenerateBolForApproved() {
-    setLoads((currentLoads) =>
-      currentLoads.map((load) =>
-        load.status === "Approved" ? generateBolForLoad(load) : load
-      )
-    );
+    updateChangedLoads(approvedLoads.map(generateBolForLoad));
   }
 
   return (
-    <section>
+    <FleetPage
+      title="Approval Queue"
+      description="Review submitted loads, approve or reject them, and unlock approved loads for BOL generation."
+    >
       <DispatchProcessNav />
 
-      <div className="page-header">
-        <div>
-          <h2>Approval Queue</h2>
-          <p>Review submitted loads, approve or reject them, and unlock approved loads for BOL generation.</p>
-        </div>
-      </div>
+      <FleetGrid columns={2}>
+        <FleetCard title="Pending Approval" eyebrow="Approval Review">
+          <div className="fleet-stat-list">
+            <div><span>Pending Loads</span><strong>{pendingLoads.length}</strong></div>
+            <div><span>Approved Loads</span><strong>{approvedLoads.length}</strong></div>
+          </div>
 
-      <div className="dashboard-grid">
-        <div className="card">
-          <h2>Pending Approval</h2>
-          <p>Loads Pending: {pendingLoads.length}</p>
+          <FleetActionBar align="right">
+            <FleetButton
+              variant="primary"
+              onClick={handleApproveAll}
+              disabled={pendingLoads.length === 0}
+            >
+              Approve Pending Loads
+            </FleetButton>
 
-          <button className="primary-button" type="button" onClick={handleApproveAll} disabled={pendingLoads.length === 0}>
-            Approve Pending Loads
-          </button>
+            <FleetButton
+              variant="danger"
+              onClick={handleRejectAll}
+              disabled={pendingLoads.length === 0}
+            >
+              Reject Pending Loads
+            </FleetButton>
+          </FleetActionBar>
+        </FleetCard>
 
-          <button type="button" onClick={handleRejectAll} disabled={pendingLoads.length === 0}>
-            Reject Pending Loads
-          </button>
-        </div>
-
-        <div className="card">
-          <h2>BOL Guardrail</h2>
+        <FleetCard title="BOL Guardrail" eyebrow="Document Service">
           <p>Only approved loads may generate a Bill of Lading through DocumentService.</p>
-          <button type="button" onClick={handleGenerateBolForApproved}>
-            Generate BOL For Approved Loads
-          </button>
-        </div>
-      </div>
 
-      <div className="card">
-        <h2>Approval Queue Loads</h2>
+          <FleetActionBar align="right">
+            <FleetButton
+              variant="secondary"
+              onClick={handleGenerateBolForApproved}
+              disabled={approvedLoads.length === 0}
+            >
+              Generate BOL For Approved Loads
+            </FleetButton>
+          </FleetActionBar>
+        </FleetCard>
+      </FleetGrid>
 
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th>Trip ID</th>
-              <th>Category</th>
-              <th>Store</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loads.map((load) => (
-              <tr key={load.id}>
-                <td>{load.tripId}</td>
-                <td>{load.categoryCode}</td>
-                <td>
-                  {load.storeNumber} - {load.storeName}
-                </td>
-                <td>{load.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
+      <BuiltLoadsTable loads={loads} />
+    </FleetPage>
   );
 }
