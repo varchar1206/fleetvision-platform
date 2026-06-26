@@ -8,6 +8,7 @@ import {
   submitLoadsForApproval,
 } from "../../../business/workflows/ApprovalWorkflow";
 import type { BusinessLoad } from "../../../business/loads/models/BusinessLoad";
+import { generateBolForLoad } from "../../../business/loads/services/DocumentService";
 
 export default function ApprovalQueuePage() {
   const initialLoads = useMemo(() => {
@@ -51,6 +52,14 @@ export default function ApprovalQueuePage() {
     );
   }
 
+  function handleGenerateBolForApproved() {
+    setLoads((currentLoads) =>
+      currentLoads.map((load) =>
+        load.status === "Approved" ? generateBolForLoad(load) : load
+      )
+    );
+  }
+
   return (
     <section>
       <DispatchProcessNav />
@@ -79,6 +88,9 @@ export default function ApprovalQueuePage() {
         <div className="card">
           <h2>BOL Guardrail</h2>
           <p>Only approved loads may generate a Bill of Lading through DocumentService.</p>
+          <button type="button" onClick={handleGenerateBolForApproved}>
+            Generate BOL For Approved Loads
+          </button>
         </div>
       </div>
 
