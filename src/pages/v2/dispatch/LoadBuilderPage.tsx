@@ -9,6 +9,8 @@ import ReferenceStatusPanel from "../../../components/load-builder/ReferenceStat
 import { buildAndValidateLoads } from "../../../business/workflows/LoadWorkflow";
 import type { BusinessLoad } from "../../../business/loads/models/BusinessLoad";
 import type { LoadBuildRequest } from "../../../business/loads/models/LoadBuildRequest";
+import FleetGrid from "../../../design-system/layout/FleetGrid";
+import FleetPage from "../../../design-system/layout/FleetPage";
 
 export default function LoadBuilderPage() {
   const [loads, setLoads] = useState<BusinessLoad[]>([]);
@@ -19,24 +21,23 @@ export default function LoadBuilderPage() {
   }
 
   return (
-    <section>
+    <FleetPage
+      title="Load Builder"
+      description="Build loads from master data, validate them, and submit them for approval."
+    >
       <DispatchProcessNav />
 
-      <div className="page-header">
-        <div>
-          <h2>Load Builder</h2>
-          <p>Build loads from master data, validate them, and submit them for approval.</p>
-        </div>
-      </div>
-
-      <div className="dashboard-grid">
+      <FleetGrid columns={2}>
         <BulkBuildPanel onBuild={handleBuildLoads} />
         <ReferenceStatusPanel />
+      </FleetGrid>
+
+      <FleetGrid columns={2}>
         <BuildSummaryPanel loads={loads} />
         <LoadBuilderActions loads={loads} onLoadsUpdated={setLoads} />
-      </div>
+      </FleetGrid>
 
       <BuiltLoadsTable loads={loads} />
-    </section>
+    </FleetPage>
   );
 }

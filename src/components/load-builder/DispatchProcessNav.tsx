@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
 
+import FleetCard from "../ui/FleetCard";
+
 const processLinks = [
   { label: "Build From Data", path: "/v2/dispatch/load-builder" },
   { label: "Upload Load File", path: "/v2/dispatch/load-upload" },
@@ -11,7 +13,7 @@ const processLinks = [
 
 export default function DispatchProcessNav() {
   return (
-    <div className="card">
+    <FleetCard>
       <div className="process-nav">
         {processLinks.map((link) => (
           <NavLink
@@ -25,6 +27,6 @@ export default function DispatchProcessNav() {
           </NavLink>
         ))}
       </div>
-    </div>
+    </FleetCard>
   );
 }

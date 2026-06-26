@@ -1,13 +1,17 @@
 .v2-shell {
   display: flex;
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   background: var(--fv-color-bg);
 }
 
 .v2-main {
   flex: 1;
+  min-width: 0;
   width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -36,6 +40,9 @@
 .v2-content {
   flex: 1;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
   padding: var(--fv-space-lg);
 }
 
