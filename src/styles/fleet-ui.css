@@ -161,3 +161,36 @@
   min-height: 96px;
   resize: vertical;
 }
+
+.fleet-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.fleet-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 820px;
+}
+
+.fleet-table th,
+.fleet-table td {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0.75rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.fleet-table th {
+  color: #475569;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: #f8fafc;
+}
+
+.fleet-table td {
+  color: #0f172a;
+  font-size: 0.9rem;
+}
