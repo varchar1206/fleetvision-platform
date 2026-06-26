@@ -1,0 +1,81 @@
+.fleet-page {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.fleet-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.fleet-page-header h2 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1.85rem;
+  line-height: 1.15;
+}
+
+.fleet-page-header p {
+  margin: 0.4rem 0 0;
+  color: #64748b;
+}
+
+.fleet-page-body {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.fleet-grid {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.fleet-grid > * {
+  min-width: 0;
+}
+
+.fleet-grid-1 {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.fleet-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.fleet-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.fleet-grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.fleet-stack {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+@media (max-width: 1100px) {
+  .fleet-grid-2,
+  .fleet-grid-3,
+  .fleet-grid-4 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .fleet-page-header {
+    flex-direction: column;
+  }
+
+  .fleet-page-header h2 {
+    font-size: 1.5rem;
+  }
+}
