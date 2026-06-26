@@ -6,6 +6,8 @@ import { listActiveLocations } from "../../../business/masterdata/services/Locat
 import { listActiveWarehouses } from "../../../business/masterdata/services/WarehouseService";
 import type { BusinessLoad } from "../../../business/loads/models/BusinessLoad";
 
+import DispatchProcessNav from "../../../components/load-builder/DispatchProcessNav";
+
 export default function LoadBuilderPage() {
   const categories = useMemo(() => listActiveCategoryRules(), []);
   const locations = useMemo(() => listActiveLocations(), []);
@@ -26,6 +28,8 @@ export default function LoadBuilderPage() {
 
   return (
     <section>
+      <DispatchProcessNav />
+
       <div className="page-header">
         <div>
           <h2>Load Builder</h2>

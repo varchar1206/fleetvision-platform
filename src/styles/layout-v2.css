@@ -157,3 +157,26 @@
 .v2-nav-group-toggle:hover {
   color: white;
 }
+
+.process-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.process-nav-link {
+  border: 1px solid var(--border-color, #d6dbe6);
+  border-radius: 999px;
+  padding: 0.65rem 1rem;
+  text-decoration: none;
+  font-weight: 700;
+  color: var(--text-color, #1f2937);
+  background: #ffffff;
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+}
+
+.process-nav-link.active {
+  background: #1f3b73;
+  color: #ffffff;
+  border-color: #1f3b73;
+}

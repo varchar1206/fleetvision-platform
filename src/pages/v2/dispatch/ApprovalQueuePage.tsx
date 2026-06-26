@@ -1,6 +1,10 @@
+import DispatchProcessNav from "../../../components/load-builder/DispatchProcessNav";
+
 export default function ApprovalQueuePage() {
   return (
     <section>
+      <DispatchProcessNav />
+
       <div className="page-header">
         <div>
           <h2>Approval Queue</h2>
