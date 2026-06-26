@@ -52,6 +52,7 @@ import V2DeveloperPortal from "./pages/v2/V2DeveloperPortal";
 import BrokerWorkspaceHome from "./pages/v2/broker/BrokerWorkspaceHome";
 import DispatchWorkspaceHome from "./pages/v2/dispatch/DispatchWorkspaceHome";
 import LoadBuilderPage from "./pages/v2/dispatch/LoadBuilderPage";
+import ApprovalQueuePage from "./pages/v2/dispatch/ApprovalQueuePage";
 import CarrierWorkspaceHome from "./pages/v2/carrier/CarrierWorkspaceHome";
 import DriverWorkspaceHome from "./pages/v2/driver/DriverWorkspaceHome";
 import MobilePortal from "./pages/mobile/MobilePortal";
@@ -102,6 +103,7 @@ function App() {
           <Route path="workspaces" element={<WorkspaceLauncher />} />
           <Route path="planning" element={<Planning />} />
           <Route path="load-builder" element={<LoadBuilderPage />} />
+          <Route path="approval-queue" element={<ApprovalQueuePage />} />
           <Route path="communications" element={<CommunicationLogPage />} />
           <Route path="communication-actions" element={<CommunicationActionsPage />} />
           <Route path="communication-log" element={<CommunicationLogPage />} />
@@ -127,6 +129,7 @@ function App() {
           <Route path="dashboard" element={<ShipperDashboard />} />
           <Route path="planning" element={<Planning />} />
           <Route path="load-builder" element={<LoadBuilderPage />} />
+          <Route path="approval-queue" element={<ApprovalQueuePage />} />
           <Route path="tender-queue" element={<TenderQueue />} />
           <Route path="active-loads" element={<ActiveLoads />} />
           <Route path="completed-loads" element={<CompletedLoads />} />
