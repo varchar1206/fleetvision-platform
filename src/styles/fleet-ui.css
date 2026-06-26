@@ -104,3 +104,25 @@
     justify-content: flex-start;
   }
 }
+
+.fleet-stat-list {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.fleet-stat-list div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.fleet-stat-list span {
+  color: #475569;
+  font-weight: 700;
+}
+
+.fleet-stat-list strong {
+  color: #0f172a;
+  font-size: 1.05rem;
+}
