@@ -16,12 +16,19 @@ export async function buildPortalSession(
 ): Promise<PortalSession> {
   const definition = portalDefinitions[portal];
 
-  const businessOrganization = await resolveOrganizationForSession(authenticationSession, portal);
-  const businessRole = await resolveRoleForSession(authenticationSession, businessOrganization, portal);
+  const businessContext = {
+    portalKey: portal,
+    organizationType: definition.portalType,
+    companyName: definition.branding.companyName,
+    userRole: definition.branding.userRole,
+  };
+
+  const businessOrganization = await resolveOrganizationForSession(authenticationSession, businessContext);
+  const businessRole = await resolveRoleForSession(authenticationSession, businessOrganization, businessContext);
   const businessPermissions = await resolvePermissionsForSession(
     authenticationSession,
     businessRole,
-    portal
+    businessContext
   );
 
   const portalPermissions: PortalPermission[] = businessPermissions.map((permission) => ({
