@@ -4,14 +4,15 @@ import { listActiveCategoryRules } from "../../business/masterdata/services/Cate
 import { listActiveLocations } from "../../business/masterdata/services/LocationService";
 import { listActiveWarehouses } from "../../business/masterdata/services/WarehouseService";
 import type { LoadBuildRequest } from "../../business/loads/models/LoadBuildRequest";
+import FleetActionBar from "../ui/FleetActionBar";
+import FleetButton from "../ui/FleetButton";
+import FleetCard from "../ui/FleetCard";
 
 type BulkBuildPanelProps = {
   onBuild(request: LoadBuildRequest): void;
 };
 
-export default function BulkBuildPanel({
-  onBuild,
-}: BulkBuildPanelProps) {
+export default function BulkBuildPanel({ onBuild }: BulkBuildPanelProps) {
   const categories = useMemo(() => listActiveCategoryRules(), []);
   const locations = useMemo(() => listActiveLocations(), []);
   const warehouses = useMemo(() => listActiveWarehouses(), []);
@@ -20,10 +21,10 @@ export default function BulkBuildPanel({
   const [warehouseId, setWarehouseId] = useState("");
   const [categoryId, setCategoryId] = useState("");
 
+  const canBuild = Boolean(loadDate && warehouseId && categoryId);
+
   function handleBuild() {
-    if (!warehouseId || !categoryId || !loadDate) {
-      return;
-    }
+    if (!canBuild) return;
 
     onBuild({
       loadDate,
@@ -34,57 +35,50 @@ export default function BulkBuildPanel({
   }
 
   return (
-    <div className="card">
-      <h2>Bulk Build</h2>
+    <FleetCard title="Bulk Build" eyebrow="Build From Data">
+      <div className="fleet-form-grid">
+        <label className="fleet-field">
+          <span>Load Date</span>
+          <input
+            type="date"
+            value={loadDate}
+            onChange={(event) => setLoadDate(event.target.value)}
+          />
+        </label>
 
-      <label>
-        Load Date
-        <input
-          type="date"
-          value={loadDate}
-          onChange={(e) => setLoadDate(e.target.value)}
-        />
-      </label>
+        <label className="fleet-field">
+          <span>Warehouse</span>
+          <select value={warehouseId} onChange={(event) => setWarehouseId(event.target.value)}>
+            <option value="">Select Warehouse</option>
+            {warehouses.map((warehouse) => (
+              <option key={warehouse.id} value={warehouse.id}>
+                {warehouse.name}
+              </option>
+            ))}
+          </select>
+        </label>
 
-      <label>
-        Warehouse
-        <select
-          value={warehouseId}
-          onChange={(e) => setWarehouseId(e.target.value)}
-        >
-          <option value="">Select Warehouse</option>
+        <label className="fleet-field">
+          <span>Category</span>
+          <select value={categoryId} onChange={(event) => setCategoryId(event.target.value)}>
+            <option value="">Select Category</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name} ({category.code})
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
 
-          {warehouses.map((warehouse) => (
-            <option key={warehouse.id} value={warehouse.id}>
-              {warehouse.name}
-            </option>
-          ))}
-        </select>
-      </label>
-
-      <label>
-        Category
-        <select
-          value={categoryId}
-          onChange={(e) => setCategoryId(e.target.value)}
-        >
-          <option value="">Select Category</option>
-
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name} ({category.code})
-            </option>
-          ))}
-        </select>
-      </label>
-
-      <button
-        className="primary-button"
-        type="button"
-        onClick={handleBuild}
-      >
-        Build Loads
-      </button>
-    </div>
+      <FleetActionBar align="right">
+        <FleetButton variant="secondary" disabled>
+          Preview Loads
+        </FleetButton>
+        <FleetButton variant="primary" onClick={handleBuild} disabled={!canBuild}>
+          Build Loads
+        </FleetButton>
+      </FleetActionBar>
+    </FleetCard>
   );
 }

@@ -126,3 +126,38 @@
   color: #0f172a;
   font-size: 1.05rem;
 }
+
+.fleet-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1rem;
+}
+
+.fleet-field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.fleet-field span {
+  color: #334155;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.fleet-field input,
+.fleet-field select,
+.fleet-field textarea {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid #cfd8e6;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #0f172a;
+  font: inherit;
+  padding: 0.55rem 0.75rem;
+}
+
+.fleet-field textarea {
+  min-height: 96px;
+  resize: vertical;
+}
