@@ -21,8 +21,13 @@ export default function BulkBuildPanel({ onBuild }: BulkBuildPanelProps) {
   const [warehouseId, setWarehouseId] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [selectedStoreIds, setSelectedStoreIds] = useState<string[]>([]);
+  const [showPreview, setShowPreview] = useState(false);
 
-  const canBuild = Boolean(loadDate && warehouseId && categoryId && selectedStoreIds.length > 0);
+  const selectedWarehouse = warehouses.find((warehouse) => warehouse.id === warehouseId);
+  const selectedCategory = categories.find((category) => category.id === categoryId);
+  const selectedStores = locations.filter((location) => selectedStoreIds.includes(location.id));
+
+  const canPreview = Boolean(loadDate && warehouseId && categoryId && selectedStoreIds.length > 0);
 
   function toggleStore(storeId: string) {
     setSelectedStoreIds((current) =>
@@ -30,18 +35,21 @@ export default function BulkBuildPanel({ onBuild }: BulkBuildPanelProps) {
         ? current.filter((id) => id !== storeId)
         : [...current, storeId]
     );
+    setShowPreview(false);
   }
 
   function selectAllStores() {
     setSelectedStoreIds(locations.map((location) => location.id));
+    setShowPreview(false);
   }
 
   function clearStores() {
     setSelectedStoreIds([]);
+    setShowPreview(false);
   }
 
   function handleBuild() {
-    if (!canBuild) return;
+    if (!canPreview) return;
 
     onBuild({
       loadDate,
@@ -59,13 +67,22 @@ export default function BulkBuildPanel({ onBuild }: BulkBuildPanelProps) {
           <input
             type="date"
             value={loadDate}
-            onChange={(event) => setLoadDate(event.target.value)}
+            onChange={(event) => {
+              setLoadDate(event.target.value);
+              setShowPreview(false);
+            }}
           />
         </label>
 
         <label className="fleet-field">
           <span>Warehouse</span>
-          <select value={warehouseId} onChange={(event) => setWarehouseId(event.target.value)}>
+          <select
+            value={warehouseId}
+            onChange={(event) => {
+              setWarehouseId(event.target.value);
+              setShowPreview(false);
+            }}
+          >
             <option value="">Select Warehouse</option>
             {warehouses.map((warehouse) => (
               <option key={warehouse.id} value={warehouse.id}>
@@ -77,7 +94,13 @@ export default function BulkBuildPanel({ onBuild }: BulkBuildPanelProps) {
 
         <label className="fleet-field">
           <span>Category</span>
-          <select value={categoryId} onChange={(event) => setCategoryId(event.target.value)}>
+          <select
+            value={categoryId}
+            onChange={(event) => {
+              setCategoryId(event.target.value);
+              setShowPreview(false);
+            }}
+          >
             <option value="">Select Category</option>
             {categories.map((category) => (
               <option key={category.id} value={category.id}>
@@ -123,11 +146,33 @@ export default function BulkBuildPanel({ onBuild }: BulkBuildPanelProps) {
 
       <div className="fleet-build-preview">
         <span>Preview Loads</span>
-        <strong>{canBuild ? selectedStoreIds.length : 0}</strong>
+        <strong>{canPreview ? selectedStoreIds.length : 0}</strong>
       </div>
 
+      {showPreview && (
+        <div className="fleet-preview-list">
+          <h3>Loads Ready to Build</h3>
+          {selectedStores.map((store) => (
+            <div className="fleet-preview-row" key={store.id}>
+              <span>Store #{store.storeNumber} - {store.storeName}</span>
+              <small>
+                {selectedCategory?.code} • {selectedWarehouse?.name} • {loadDate}
+              </small>
+            </div>
+          ))}
+        </div>
+      )}
+
       <FleetActionBar align="right">
-        <FleetButton variant="primary" onClick={handleBuild} disabled={!canBuild}>
+        <FleetButton
+          variant="secondary"
+          onClick={() => setShowPreview(true)}
+          disabled={!canPreview}
+        >
+          Preview Loads
+        </FleetButton>
+
+        <FleetButton variant="primary" onClick={handleBuild} disabled={!canPreview}>
           Build Selected Loads
         </FleetButton>
       </FleetActionBar>

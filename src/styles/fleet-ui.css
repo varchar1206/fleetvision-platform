@@ -284,3 +284,34 @@
     flex-direction: column;
   }
 }
+
+.fleet-preview-list {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.fleet-preview-list h3 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1rem;
+}
+
+.fleet-preview-row {
+  border: 1px solid #d9e1ec;
+  border-radius: 12px;
+  padding: 0.7rem 0.8rem;
+  background: #ffffff;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.fleet-preview-row span {
+  color: #0f172a;
+  font-weight: 800;
+}
+
+.fleet-preview-row small {
+  color: #64748b;
+  font-weight: 700;
+}
