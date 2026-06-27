@@ -1,4 +1,7 @@
 import { portalDefinitions, type PortalKey } from "../../portal/config/portalDefinitions";
+import FleetCard from "../../components/ui/FleetCard";
+import FleetGrid from "../../design-system/layout/FleetGrid";
+import FleetPage from "../../design-system/layout/FleetPage";
 
 type Props = {
   portal: PortalKey;
@@ -8,35 +11,24 @@ export default function ClientPortalHome({ portal }: Props) {
   const config = portalDefinitions[portal];
 
   return (
-    <section>
-      <div className="page-header">
-        <div>
-          <h2>{config.title}</h2>
-          <p>{config.subtitle}</p>
-        </div>
-      </div>
-
-      <div className="dashboard-grid">
-        <div className="card">
-          <h2>Company Profile</h2>
+    <FleetPage title={config.title} description={config.subtitle}>
+      <FleetGrid columns={2}>
+        <FleetCard title="Company Profile" eyebrow="Company Profile">
           <p>Review company information, DOT/MC numbers, logo, contact details, and status.</p>
-        </div>
+        </FleetCard>
 
-        <div className="card">
-          <h2>User Profile</h2>
+        <FleetCard title="User Profile" eyebrow="User Profile">
           <p>Review name, email, phone, role, and avatar placeholder.</p>
-        </div>
+        </FleetCard>
 
-        <div className="card">
-          <h2>Relationships</h2>
+        <FleetCard title="Relationships" eyebrow="Relationships">
           <p>View connected shippers, brokers, carriers, or drivers.</p>
-        </div>
+        </FleetCard>
 
-        <div className="card">
-          <h2>Documents</h2>
+        <FleetCard title="Documents" eyebrow="Documents">
           <p>Future home for logos, avatars, PODs, BOLs, insurance, and uploaded files.</p>
-        </div>
-      </div>
-    </section>
+        </FleetCard>
+      </FleetGrid>
+    </FleetPage>
   );
 }

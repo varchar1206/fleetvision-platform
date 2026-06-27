@@ -267,3 +267,40 @@
     flex-wrap: wrap;
   }
 }
+
+/* Portal layout containment */
+.portal-shell,
+.portal-shell * {
+  box-sizing: border-box;
+}
+
+.portal-shell {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.portal-main {
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.portal-content {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.portal-content > * {
+  max-width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .portal-content {
+    padding: 20px;
+  }
+}
